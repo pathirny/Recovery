@@ -5,11 +5,10 @@ export default function CalendarView() {
   const [date, setDate] = useState(new Date());
   const [event, setEvent] = useState();
 
-
   function changeValue(val) {
     setDate(val);
   }
-  
+
   return (
     <div>
       <Calendar
