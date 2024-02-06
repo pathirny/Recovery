@@ -5,7 +5,7 @@ import Logo from "../recoveryLogo.png";
 export default function Header() {
   return (
     <div className="header">
-      <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>
+      <FontAwesomeIcon icon={faHouse} size="2xl" style={{ color: "#ff0000" }} />
       <div>
         <img src={Logo} alt="Logo" className="logoImage"></img>
       </div>
