@@ -37,7 +37,7 @@ code {
 .form {
   width: 80vw;
   height: 30vh;
-  background-color: red;
+  background-color: #ffb600;
 }
 .form form {
   display: flex;

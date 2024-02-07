@@ -8,7 +8,8 @@ export default function CalendarView() {
   function changeValue(val) {
     setDate(val);
   }
-
+  console.log(date);
+  let total = 15;
   return (
     <div>
       <Calendar
@@ -25,19 +26,21 @@ export default function CalendarView() {
       />
       {showForm && (
         <div className="form">
-          <p>The selected date is - {date.toLocaleDateString()}</p>
+          <p>The selected date is - {date.toLocaleDateString("en-GB")}</p>
 
           <form>
-            <label>Cost</label>
-            <input type="number" name="cost" />
             <label>Income</label>
             <input type="number" name="income" />
+            <label>Cost</label>
+            <input type="number" name="cost" />
             <label>Notes</label>
             <textarea type="text" name="notes" />
             <button>Submit</button>
           </form>
         </div>
       )}
+
+      <h2>Todays total is: {total}</h2>
     </div>
   );
 }
