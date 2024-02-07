@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 export default function CalendarView() {
   const [date, setDate] = useState(new Date());
   const [event, setEvent] = useState();
-  const [showForm, setShowForm] = useState();
+  const [showForm, setShowForm] = useState(true);
   function changeValue(val) {
     setDate(val);
   }
@@ -25,17 +25,19 @@ export default function CalendarView() {
       />
       {showForm && (
         <div className="form">
+          <p>The selected date is - {date.toLocaleDateString()}</p>
+
           <form>
             <label>Cost</label>
-            <input type="text" name="cost" />
+            <input type="number" name="cost" />
             <label>Income</label>
-            <input type="text" name="cost" />
-            <label>Cost</label>
-            <input type="text" name="cost" />
+            <input type="number" name="income" />
+            <label>Notes</label>
+            <textarea type="text" name="notes" />
+            <button>Submit</button>
           </form>
         </div>
       )}
-      <p>The selected date is - {date.toLocaleDateString()}</p>
     </div>
   );
 }

@@ -34,6 +34,25 @@ code {
   height: auto;
 }
 
+.form {
+  width: 80vw;
+  height: 30vh;
+  background-color: red;
+}
+.form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 20vh;
+}
+.form form input,
+.form form textarea {
+  width: 70vw;
+}
+
+/* 
+Everything below this will style the calendar */
 .react-calendar {
   width: 350px;
   max-width: 100%;
