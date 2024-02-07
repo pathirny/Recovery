@@ -5,7 +5,7 @@ import CalendarView from "./components/Calendar";
 import { createClient } from "@supabase/supabase-js";
 
 function App() {
-  const supabaseUrl = "https://phadnllouzhlgrzzqzsx.supabase.co";
+  const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
     supabaseUrl,
     process.env.REACT_APP_SUPABASE_KEY
@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <CalendarView />
+      <CalendarView props={supabase} />
     </div>
   );
 }
