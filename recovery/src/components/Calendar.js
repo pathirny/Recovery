@@ -12,6 +12,8 @@ export default function CalendarView() {
   const [costs, setCosts] = useState();
   const [income, setIncome] = useState();
   const [total, setTotal] = useState();
+
+  // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
     supabaseUrl,
@@ -21,6 +23,8 @@ export default function CalendarView() {
   function changeValue(val) {
     setDate(val);
   }
+
+  // get the data from supabase
   useEffect(() => {
     async function getData() {
       let { data, error } = await supabase
@@ -34,6 +38,7 @@ export default function CalendarView() {
     getData();
   }, []);
 
+  // take away costs from income
   useEffect(() => {
     if (income !== undefined && costs !== undefined) {
       let amount = parseInt(income) - parseInt(costs);
@@ -47,6 +52,7 @@ export default function CalendarView() {
         onChange={changeValue}
         value={date}
         defaultView="month"
+        // need to format day to be a layout of 'year/month.day'
         onClickDay={(day) => {
           if (day) {
             setShowForm(true);
@@ -68,10 +74,9 @@ export default function CalendarView() {
             <textarea type="text" name="notes" />
             <button>Submit</button>
           </form>
+          <h2>Todays total is: {total}</h2>
         </div>
       )}
-
-      <h2>Todays total is: {total}</h2>
     </div>
   );
 }
