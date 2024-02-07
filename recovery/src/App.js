@@ -11,7 +11,6 @@ function App() {
     process.env.REACT_APP_SUPABASE_KEY
   );
 
-  console.log(supabase);
   return (
     <div className="App">
       <Header />

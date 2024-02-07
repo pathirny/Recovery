@@ -3,7 +3,9 @@ import Calendar from "react-calendar";
 import { createClient } from "@supabase/supabase-js";
 
 export default function CalendarView() {
-  const [date, setDate] = useState(new Date());
+  // need to set date to new Date();
+  //current date is dummy data
+  const [date, setDate] = useState("2024/02/07");
   const [event, setEvent] = useState();
   const [showForm, setShowForm] = useState(true);
   const [calendarData, setCalendarData] = useState();
@@ -15,9 +17,16 @@ export default function CalendarView() {
     supabaseUrl,
     process.env.REACT_APP_SUPABASE_KEY
   );
+
+  function changeValue(val) {
+    setDate(val);
+  }
   useEffect(() => {
     async function getData() {
-      let { data, error } = await supabase.from("Calendar").select("*");
+      let { data, error } = await supabase
+        .from("Calendar")
+        .select("*")
+        .eq("created_at", date);
       let response = data;
       setCosts(response[0].costs);
       setIncome(response[0].income);
@@ -31,10 +40,6 @@ export default function CalendarView() {
       setTotal(amount);
     }
   }, [income, costs]);
-
-  function changeValue(val) {
-    setDate(val);
-  }
 
   return (
     <div>
@@ -52,7 +57,7 @@ export default function CalendarView() {
       />
       {showForm && (
         <div className="form">
-          <p>The selected date is - {date.toLocaleDateString("en-GB")}</p>
+          {/* <p>The selected date is - {date.toLocaleDateString("en-GB")}</p> */}
 
           <form>
             <label>Income</label>
