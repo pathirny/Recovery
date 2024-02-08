@@ -5,12 +5,10 @@ import { createClient } from "@supabase/supabase-js";
 export default function CalendarView() {
   // need to set date to new Date();
   //current date is dummy data
-  const [date, setDate] = useState(
+  const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0].replace(/-/g, "/")
   );
-  const [event, setEvent] = useState();
-  const [showForm, setShowForm] = useState(true);
-  const [calendarData, setCalendarData] = useState();
+  const [showForm, setShowForm] = useState(false);
   const [petrol, setPetrol] = useState();
   const [tyres, setTyres] = useState();
   const [repairs, setRepairs] = useState();
@@ -24,17 +22,23 @@ export default function CalendarView() {
     process.env.REACT_APP_SUPABASE_KEY
   );
 
-  function changeValue(date) {
-    setDate(date);
-  }
-
+  // function changeValue(val) {
+  //   setDate(date);
+  // }
+  const onChange = (day) => {
+    const formattedDate = `${day.getFullYear()}/${
+      day.getMonth() + 1
+    }/${day.getDate()}`;
+    setSelectedDate(formattedDate);
+    setShowForm(true);
+  };
   // get the data from supabase
   useEffect(() => {
     async function getData() {
       let { data, error } = await supabase
         .from("Calendar")
         .select("*")
-        .eq("created_at", date);
+        .eq("created_at", selectedDate);
       let response = data;
       console.log(response);
       setOtherCosts(response[0].other_costs);
@@ -47,7 +51,7 @@ export default function CalendarView() {
       }
     }
     getData();
-  }, []);
+  }, [selectedDate, supabase]);
 
   // take away costs from income
   useEffect(() => {
@@ -71,22 +75,15 @@ export default function CalendarView() {
   return (
     <div>
       <Calendar
-        onChange={changeValue}
-        value={date}
+        onChange={onChange}
+        value={selectedDate}
         defaultView="month"
         // need to format day to be a layout of 'year/month.day'
-        onClickDay={(day) => {
-          if (day) {
-            setShowForm(true);
-            setDate(date);
-          } else {
-            setShowForm(false);
-          }
-        }}
+        onClickDay={onChange}
       />
       {showForm && (
         <div className="form">
-          <p>The selected date is - {date}</p>
+          {/* <p>The selected date is - {date}</p> */}
 
           <form>
             <label>Income</label>
