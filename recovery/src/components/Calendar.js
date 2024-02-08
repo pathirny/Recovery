@@ -5,14 +5,18 @@ import { createClient } from "@supabase/supabase-js";
 export default function CalendarView() {
   // need to set date to new Date();
   //current date is dummy data
-  const [date, setDate] = useState(new Date("2024/02/08"));
+  const [date, setDate] = useState(
+    new Date().toISOString().split("T")[0].replace(/-/g, "/")
+  );
   const [event, setEvent] = useState();
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
   const [calendarData, setCalendarData] = useState();
-  const [costs, setCosts] = useState();
+  const [petrol, setPetrol] = useState();
+  const [tyres, setTyres] = useState();
+  const [repairs, setRepairs] = useState();
+  const [otherCosts, setOtherCosts] = useState();
   const [income, setIncome] = useState();
   const [total, setTotal] = useState();
-  const [sending, setSending] = useState(false);
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -26,31 +30,43 @@ export default function CalendarView() {
 
   // get the data from supabase
   useEffect(() => {
-    if (sending) {
-      async function getData() {
-        let { data, error } = await supabase
-          .from("Calendar")
-          .select("*")
-          .eq("created_at", date);
-        let response = data;
-        setCosts(response[0].costs);
-        setIncome(response[0].income);
-        if (error) {
-          console.log(error);
-        }
+    async function getData() {
+      let { data, error } = await supabase
+        .from("Calendar")
+        .select("*")
+        .eq("created_at", date);
+      let response = data;
+      console.log(response);
+      setOtherCosts(response[0].other_costs);
+      setRepairs(response[0].repairs);
+      setTyres(response[0].tyres);
+      setPetrol(response[0].petrol);
+      setIncome(response[0].income);
+      if (error) {
+        console.log(error);
       }
-      getData();
     }
+    getData();
   }, []);
-  console.log(date);
 
   // take away costs from income
   useEffect(() => {
-    if (income !== undefined && costs !== undefined) {
-      let amount = parseInt(income) - parseInt(costs);
+    if (
+      income !== undefined &&
+      otherCosts !== undefined &&
+      petrol !== undefined &&
+      repairs !== undefined &&
+      tyres !== undefined
+    ) {
+      let amount =
+        parseInt(income) -
+        parseInt(otherCosts) -
+        parseInt(repairs) -
+        parseInt(tyres) -
+        parseInt(petrol);
       setTotal(amount);
     }
-  }, [income, costs]);
+  }, [income, otherCosts, repairs, tyres, petrol]);
 
   return (
     <div>
@@ -62,9 +78,7 @@ export default function CalendarView() {
         onClickDay={(day) => {
           if (day) {
             setShowForm(true);
-            setDate(day);
-            console.log(date);
-            setSending(true);
+            setDate(date);
           } else {
             setShowForm(false);
           }
@@ -72,13 +86,19 @@ export default function CalendarView() {
       />
       {showForm && (
         <div className="form">
-          <p>The selected date is - {date.toLocaleDateString("en-GB")}</p>
+          <p>The selected date is - {date}</p>
 
           <form>
             <label>Income</label>
             <input type="number" name="income" />
-            <label>Cost</label>
-            <input type="number" name="cost" />
+            <label>Petrol</label>
+            <input type="number" name="Petrol" />
+            <label>Repairs</label>
+            <input type="number" name="Repairs" />
+            <label>Tyres</label>
+            <input type="number" name="Tyres" />
+            <label>Other Costs</label>
+            <input type="number" name="Other Costs" />
             <label>Notes</label>
             <textarea type="text" name="notes" />
             <button>Submit</button>
