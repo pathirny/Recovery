@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { createClient } from "@supabase/supabase-js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGasPump,
+  faScrewdriverWrench,
+  faTruckMonster,
+  faReceipt,
+  faMoneyBillWave,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function CalendarView() {
   // need to set date to new Date();
@@ -88,22 +96,27 @@ export default function CalendarView() {
           <form>
             <div className="formInputs">
               <label>Income</label>
+              <FontAwesomeIcon icon={faMoneyBillWave} />
               <input type="number" name="income" />
             </div>
             <div className="formInputs">
-              <label>Petrol</label>
+              <label>Fuel</label>
+              <FontAwesomeIcon icon={faGasPump} />
               <input type="number" name="Petrol" />
             </div>
             <div className="formInputs">
               <label>Repairs</label>
+              <FontAwesomeIcon icon={faScrewdriverWrench} />
               <input type="number" name="Repairs" />
             </div>
             <div className="formInputs">
               <label>Tyres</label>
+              <FontAwesomeIcon icon={faTruckMonster} />
               <input type="number" name="Tyres" />
             </div>
             <div className="formInputs">
               <label>Other Costs</label>
+              <FontAwesomeIcon icon={faReceipt} />
               <input type="number" name="Other Costs" />
             </div>
             <div className="formInputs">
