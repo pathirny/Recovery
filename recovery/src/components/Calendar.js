@@ -5,14 +5,14 @@ import { createClient } from "@supabase/supabase-js";
 export default function CalendarView() {
   // need to set date to new Date();
   //current date is dummy data
-  const [date, setDate] = useState("2024/02/07");
+  const [date, setDate] = useState(new Date("2024/02/08"));
   const [event, setEvent] = useState();
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [calendarData, setCalendarData] = useState();
   const [costs, setCosts] = useState();
   const [income, setIncome] = useState();
   const [total, setTotal] = useState();
-
+  const [sending, setSending] = useState(false);
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -20,23 +20,29 @@ export default function CalendarView() {
     process.env.REACT_APP_SUPABASE_KEY
   );
 
-  function changeValue(val) {
-    setDate(val);
+  function changeValue(date) {
+    setDate(date);
   }
 
   // get the data from supabase
   useEffect(() => {
-    async function getData() {
-      let { data, error } = await supabase
-        .from("Calendar")
-        .select("*")
-        .eq("created_at", date);
-      let response = data;
-      setCosts(response[0].costs);
-      setIncome(response[0].income);
+    if (sending) {
+      async function getData() {
+        let { data, error } = await supabase
+          .from("Calendar")
+          .select("*")
+          .eq("created_at", date);
+        let response = data;
+        setCosts(response[0].costs);
+        setIncome(response[0].income);
+        if (error) {
+          console.log(error);
+        }
+      }
+      getData();
     }
-    getData();
   }, []);
+  console.log(date);
 
   // take away costs from income
   useEffect(() => {
@@ -56,6 +62,9 @@ export default function CalendarView() {
         onClickDay={(day) => {
           if (day) {
             setShowForm(true);
+            setDate(day);
+            console.log(date);
+            setSending(true);
           } else {
             setShowForm(false);
           }
@@ -63,7 +72,7 @@ export default function CalendarView() {
       />
       {showForm && (
         <div className="form">
-          {/* <p>The selected date is - {date.toLocaleDateString("en-GB")}</p> */}
+          <p>The selected date is - {date.toLocaleDateString("en-GB")}</p>
 
           <form>
             <label>Income</label>
