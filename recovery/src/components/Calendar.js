@@ -86,18 +86,30 @@ export default function CalendarView() {
           {/* <p>The selected date is - {date}</p> */}
 
           <form>
-            <label>Income</label>
-            <input type="number" name="income" />
-            <label>Petrol</label>
-            <input type="number" name="Petrol" />
-            <label>Repairs</label>
-            <input type="number" name="Repairs" />
-            <label>Tyres</label>
-            <input type="number" name="Tyres" />
-            <label>Other Costs</label>
-            <input type="number" name="Other Costs" />
-            <label>Notes</label>
-            <textarea type="text" name="notes" />
+            <div className="formInputs">
+              <label>Income</label>
+              <input type="number" name="income" />
+            </div>
+            <div className="formInputs">
+              <label>Petrol</label>
+              <input type="number" name="Petrol" />
+            </div>
+            <div className="formInputs">
+              <label>Repairs</label>
+              <input type="number" name="Repairs" />
+            </div>
+            <div className="formInputs">
+              <label>Tyres</label>
+              <input type="number" name="Tyres" />
+            </div>
+            <div className="formInputs">
+              <label>Other Costs</label>
+              <input type="number" name="Other Costs" />
+            </div>
+            <div className="formInputs">
+              <label>Notes</label>
+              <textarea type="text" name="notes" />
+            </div>
             <button>Submit</button>
           </form>
           <h2>Todays total is: {total}</h2>
