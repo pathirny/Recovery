@@ -86,6 +86,22 @@ export default function CalendarView() {
     }
   }, [income, otherCosts, repairs, tyres, petrol]);
 
+  // inserting new data
+  async function insertData() {
+    const { data, error } = await supabase
+      .from("Calendar")
+      .insert([
+        { created_at: selectedDate },
+        { income: "190" },
+        { other_costs: "24" },
+        { petrol: "19" },
+        { repairs: "0" },
+        { tyres: "10" },
+      ])
+      .select();
+    console.log(data);
+  }
+
   return (
     <div>
       <Calendar
@@ -126,7 +142,7 @@ export default function CalendarView() {
               <input type="number" name="Other Costs" />
             </div>
 
-            <button>Submit</button>
+            <button onClick={insertData}>Submit</button>
           </form>
           <h2>Todays total is: {total}</h2>
         </div>
