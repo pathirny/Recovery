@@ -119,10 +119,7 @@ export default function CalendarView() {
               <FontAwesomeIcon icon={faReceipt} />
               <input type="number" name="Other Costs" />
             </div>
-            <div className="formInputs">
-              <label>Notes</label>
-              <textarea type="text" name="notes" />
-            </div>
+
             <button>Submit</button>
           </form>
           <h2>Todays total is: {total}</h2>
