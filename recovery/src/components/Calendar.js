@@ -43,18 +43,24 @@ export default function CalendarView() {
   // get the data from supabase
   useEffect(() => {
     async function getData() {
-      let { data, error } = await supabase
-        .from("Calendar")
-        .select("*")
-        .eq("created_at", selectedDate);
-      let response = data;
-      console.log(response);
-      setOtherCosts(response[0].other_costs);
-      setRepairs(response[0].repairs);
-      setTyres(response[0].tyres);
-      setPetrol(response[0].petrol);
-      setIncome(response[0].income);
-      if (error) {
+      try {
+        let { data, error } = await supabase
+          .from("Calendar")
+          .select("*")
+          .eq("created_at", selectedDate);
+
+        let response = data;
+        console.log(response);
+
+        setOtherCosts(response[0].other_costs);
+        setRepairs(response[0].repairs);
+        setTyres(response[0].tyres);
+        setPetrol(response[0].petrol);
+        setIncome(response[0].income);
+        if (error) {
+          console.log(error);
+        }
+      } catch (error) {
         console.log(error);
       }
     }
