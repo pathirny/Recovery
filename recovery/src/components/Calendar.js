@@ -119,7 +119,6 @@ export default function CalendarView() {
     setTyres(0);
   }, [selectedDate]);
 
-  
   return (
     <div>
       <Calendar
@@ -189,7 +188,7 @@ export default function CalendarView() {
               Submit
             </button>
           </form>
-          <h2>Todays total is: {total}</h2>
+          <h2>Todays total is: £{total}</h2>
         </div>
       )}
     </div>
