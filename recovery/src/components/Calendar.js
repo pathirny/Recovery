@@ -123,27 +123,52 @@ export default function CalendarView() {
             <div className="formInputs">
               <label>Income</label>
               <FontAwesomeIcon icon={faMoneyBillWave} />
-              <input type="number" name="income" value={income} />
+              <input
+                type="number"
+                name="income"
+                value={income}
+                onChange={(event) => setIncome(event.target.value)}
+              />
             </div>
             <div className="formInputs">
               <label>Fuel</label>
               <FontAwesomeIcon icon={faGasPump} />
-              <input type="number" name="Petrol" value={petrol} />
+              <input
+                type="number"
+                name="Petrol"
+                value={petrol}
+                onChange={(event) => setPetrol(event.target.value)}
+              />
             </div>
             <div className="formInputs">
               <label>Repairs</label>
               <FontAwesomeIcon icon={faScrewdriverWrench} />
-              <input type="number" name="Repairs" value={repairs} />
+              <input
+                type="number"
+                name="Repairs"
+                value={repairs}
+                onChange={(event) => setRepairs(event.target.value)}
+              />
             </div>
             <div className="formInputs">
               <label>Tyres</label>
               <FontAwesomeIcon icon={faTruckMonster} />
-              <input type="number" name="Tyres" value={tyres} />
+              <input
+                type="number"
+                name="Tyres"
+                value={tyres}
+                onChange={(event) => setTyres(event.target.value)}
+              />
             </div>
             <div className="formInputs">
               <label>Other Costs</label>
               <FontAwesomeIcon icon={faReceipt} />
-              <input type="number" name="Other Costs" value={otherCosts} />
+              <input
+                type="number"
+                name="Other Costs"
+                value={otherCosts}
+                onChange={(event) => setOtherCosts(event.target.value)}
+              />
             </div>
 
             <button type="button" onClick={insertData}>
