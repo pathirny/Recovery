@@ -17,12 +17,12 @@ export default function CalendarView() {
     new Date().toISOString().split("T")[0].replace(/-/g, "/")
   );
   const [showForm, setShowForm] = useState(false);
-  const [petrol, setPetrol] = useState();
-  const [tyres, setTyres] = useState();
-  const [repairs, setRepairs] = useState();
-  const [otherCosts, setOtherCosts] = useState();
-  const [income, setIncome] = useState();
-  const [total, setTotal] = useState();
+  const [petrol, setPetrol] = useState(0);
+  const [tyres, setTyres] = useState(0);
+  const [repairs, setRepairs] = useState(0);
+  const [otherCosts, setOtherCosts] = useState(0);
+  const [income, setIncome] = useState(0);
+  const [total, setTotal] = useState(0);
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -50,16 +50,18 @@ export default function CalendarView() {
           .eq("created_at", selectedDate);
 
         let response = data;
-        console.log(response);
-
+        if (!data) {
+          setOtherCosts(0);
+          setRepairs(0);
+          setTyres(0);
+          setPetrol(0);
+          setIncome(0);
+        }
         setOtherCosts(response[0].other_costs);
         setRepairs(response[0].repairs);
         setTyres(response[0].tyres);
         setPetrol(response[0].petrol);
         setIncome(response[0].income);
-        if (error) {
-          console.log(error);
-        }
       } catch (error) {
         console.log(error);
       }
@@ -106,6 +108,10 @@ export default function CalendarView() {
     }
   }
 
+  function closeFormInsertData() {
+    setShowForm(false);
+    insertData();
+  }
   return (
     <div>
       <Calendar
@@ -171,7 +177,7 @@ export default function CalendarView() {
               />
             </div>
 
-            <button type="button" onClick={insertData}>
+            <button type="button" onClick={closeFormInsertData}>
               Submit
             </button>
           </form>
