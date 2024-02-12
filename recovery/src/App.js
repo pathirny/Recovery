@@ -10,6 +10,10 @@ function App() {
     process.env.REACT_APP_SUPABASE_KEY
   );
 
+  function docName() {
+    document.title = "Pat Recovery";
+  }
+  docName();
   return (
     <div className="App">
       <Header />
