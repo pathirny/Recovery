@@ -91,15 +91,19 @@ export default function CalendarView() {
     const { data, error } = await supabase
       .from("Calendar")
       .insert([
-        { created_at: selectedDate },
-        { income: "190" },
-        { other_costs: "24" },
-        { petrol: "19" },
-        { repairs: "0" },
-        { tyres: "10" },
+        {
+          created_at: selectedDate,
+          income: income,
+          other_costs: otherCosts,
+          petrol: petrol,
+          repairs: repairs,
+          tyres: tyres,
+        },
       ])
       .select();
-    console.log(data);
+    if (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -119,30 +123,32 @@ export default function CalendarView() {
             <div className="formInputs">
               <label>Income</label>
               <FontAwesomeIcon icon={faMoneyBillWave} />
-              <input type="number" name="income" />
+              <input type="number" name="income" value={income} />
             </div>
             <div className="formInputs">
               <label>Fuel</label>
               <FontAwesomeIcon icon={faGasPump} />
-              <input type="number" name="Petrol" />
+              <input type="number" name="Petrol" value={petrol} />
             </div>
             <div className="formInputs">
               <label>Repairs</label>
               <FontAwesomeIcon icon={faScrewdriverWrench} />
-              <input type="number" name="Repairs" />
+              <input type="number" name="Repairs" value={repairs} />
             </div>
             <div className="formInputs">
               <label>Tyres</label>
               <FontAwesomeIcon icon={faTruckMonster} />
-              <input type="number" name="Tyres" />
+              <input type="number" name="Tyres" value={tyres} />
             </div>
             <div className="formInputs">
               <label>Other Costs</label>
               <FontAwesomeIcon icon={faReceipt} />
-              <input type="number" name="Other Costs" />
+              <input type="number" name="Other Costs" value={otherCosts} />
             </div>
 
-            <button onClick={insertData}>Submit</button>
+            <button type="button" onClick={insertData}>
+              Submit
+            </button>
           </form>
           <h2>Todays total is: {total}</h2>
         </div>
