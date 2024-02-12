@@ -17,12 +17,12 @@ export default function CalendarView() {
     new Date().toISOString().split("T")[0].replace(/-/g, "/")
   );
   const [showForm, setShowForm] = useState(false);
-  const [petrol, setPetrol] = useState(0);
-  const [tyres, setTyres] = useState(0);
-  const [repairs, setRepairs] = useState(0);
-  const [otherCosts, setOtherCosts] = useState(0);
-  const [income, setIncome] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [petrol, setPetrol] = useState();
+  const [tyres, setTyres] = useState();
+  const [repairs, setRepairs] = useState();
+  const [otherCosts, setOtherCosts] = useState();
+  const [income, setIncome] = useState();
+  const [total, setTotal] = useState();
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -50,20 +50,19 @@ export default function CalendarView() {
           .eq("created_at", selectedDate);
 
         let response = data;
-        if (!data) {
-          setOtherCosts(0);
-          setRepairs(0);
-          setTyres(0);
-          setPetrol(0);
-          setIncome(0);
-        }
-        setOtherCosts(response[0].other_costs);
-        setRepairs(response[0].repairs);
-        setTyres(response[0].tyres);
-        setPetrol(response[0].petrol);
-        setIncome(response[0].income);
+
+        setOtherCosts(response[0].other_costs || 0);
+        setRepairs(response[0].repairs || 0);
+        setTyres(response[0].tyres || 0);
+        setPetrol(response[0].petrol || 0);
+        setIncome(response[0].income || 0);
       } catch (error) {
         console.log(error);
+        // setOtherCosts(null);
+        // setRepairs(0);
+        // setTyres(0);
+        // setPetrol(0);
+        // setIncome(0);
       }
     }
     getData();
@@ -112,6 +111,15 @@ export default function CalendarView() {
     setShowForm(false);
     insertData();
   }
+  useEffect(() => {
+    setIncome(0);
+    setPetrol(0);
+    setOtherCosts(0);
+    setRepairs(0);
+    setTyres(0);
+  }, [selectedDate]);
+
+  
   return (
     <div>
       <Calendar
