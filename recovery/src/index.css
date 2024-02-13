@@ -62,6 +62,14 @@ code {
   align-items: center;
 }
 
+.submitForm {
+  width: 50vw;
+  align-self: center;
+  margin-top: 4vh;
+  height: 3vh;
+  border-radius: 10px;
+}
+
 /* 
 Everything below this will style the calendar */
 .react-calendar {

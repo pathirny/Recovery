@@ -184,7 +184,11 @@ export default function CalendarView() {
               />
             </div>
 
-            <button type="button" onClick={closeFormInsertData}>
+            <button
+              type="button"
+              className="submitForm"
+              onClick={closeFormInsertData}
+            >
               Submit
             </button>
           </form>
