@@ -127,16 +127,6 @@ export default function CalendarView() {
     setTyres(0);
   }, [selectedDate]);
 
-  // this will be used to get a whole months totals added together when month is clicked on
-  // useEffect(() => {
-  //   async function getMonth() {
-  //     let { data, error } = await supabase
-  //       .from("Calendar")
-  //       .select("*")
-  //       .eq("created_at", selectedMonth);
-  //   }
-  // }, [selectedMonth, supabase]);
-
   const onChangeMonth = (month) => {
     const formattedMonth = `${month.getFullYear()}/${
       month.getMonth() + 1
@@ -146,6 +136,19 @@ export default function CalendarView() {
   };
 
   console.log(selectedMonth);
+
+  // this will be used to get a whole months totals added together when month is clicked on
+  useEffect(() => {
+    async function getMonth() {
+      let { data, error } = await supabase
+        .from("Calendar")
+        .select("total")
+        // this format works but only gets data from 1 day - need to get total across all days in set month
+        .eq("created_at", "2024-02-12");
+      console.log(data);
+    }
+    getMonth();
+  }, [selectedMonth, supabase]);
 
   return (
     <div>
