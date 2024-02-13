@@ -213,7 +213,10 @@ export default function CalendarView() {
         </div>
       )}
       {submitted && (
-        <div className="sentConfirm " style={{ bottom: "5vh" }}>
+        <div
+          className="sentConfirm"
+          style={{ bottom: submitted ? "5vh" : "-100px" }}
+        >
           <h2>Sent!</h2>
         </div>
       )}
