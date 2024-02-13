@@ -23,6 +23,7 @@ export default function CalendarView() {
   const [otherCosts, setOtherCosts] = useState();
   const [income, setIncome] = useState();
   const [total, setTotal] = useState();
+  const [submitted, setSubmitted] = useState(false);
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -99,7 +100,7 @@ export default function CalendarView() {
           petrol: petrol,
           repairs: repairs,
           tyres: tyres,
-          total: total
+          total: total,
         },
       ])
       .select();
@@ -111,6 +112,11 @@ export default function CalendarView() {
   function closeFormInsertData() {
     setShowForm(false);
     insertData();
+    setSubmitted(true);
+
+    setTimeout(() => {
+      setSubmitted(false);
+    }, 4000);
   }
   useEffect(() => {
     setIncome(0);
@@ -120,14 +126,16 @@ export default function CalendarView() {
     setTyres(0);
   }, [selectedDate]);
 
+  // this will be used to get a whole months totals added together when month is clicked on
   useEffect(() => {
     async function getMonth() {
       let { data, error } = await supabase
         .from("Calendar")
         .select("*")
-        .eq("created_at", );
+        .eq("created_at");
     }
   }, []);
+
   return (
     <div>
       <Calendar
@@ -202,6 +210,11 @@ export default function CalendarView() {
             </button>
           </form>
           <h2>Todays total is: £{total}</h2>
+        </div>
+      )}
+      {submitted && (
+        <div className="sentConfirm " style={{ bottom: "5vh" }}>
+          <h2>Sent!</h2>
         </div>
       )}
     </div>
