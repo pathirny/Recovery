@@ -99,6 +99,7 @@ export default function CalendarView() {
           petrol: petrol,
           repairs: repairs,
           tyres: tyres,
+          total: total
         },
       ])
       .select();
@@ -119,6 +120,14 @@ export default function CalendarView() {
     setTyres(0);
   }, [selectedDate]);
 
+  useEffect(() => {
+    async function getMonth() {
+      let { data, error } = await supabase
+        .from("Calendar")
+        .select("*")
+        .eq("created_at", );
+    }
+  }, []);
   return (
     <div>
       <Calendar
