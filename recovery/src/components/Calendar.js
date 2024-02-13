@@ -24,6 +24,7 @@ export default function CalendarView() {
   const [income, setIncome] = useState();
   const [total, setTotal] = useState();
   const [submitted, setSubmitted] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState();
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -127,14 +128,24 @@ export default function CalendarView() {
   }, [selectedDate]);
 
   // this will be used to get a whole months totals added together when month is clicked on
-  useEffect(() => {
-    async function getMonth() {
-      let { data, error } = await supabase
-        .from("Calendar")
-        .select("*")
-        .eq("created_at");
-    }
-  }, []);
+  // useEffect(() => {
+  //   async function getMonth() {
+  //     let { data, error } = await supabase
+  //       .from("Calendar")
+  //       .select("*")
+  //       .eq("created_at", selectedMonth);
+  //   }
+  // }, [selectedMonth, supabase]);
+
+  const onChangeMonth = (month) => {
+    const formattedMonth = `${month.getFullYear()}/${
+      month.getMonth() + 1
+    }/${month.getDate()}`;
+    setSelectedMonth(formattedMonth);
+    setShowForm(true);
+  };
+
+  console.log(selectedMonth);
 
   return (
     <div>
@@ -142,8 +153,9 @@ export default function CalendarView() {
         onChange={onChange}
         value={selectedDate}
         defaultView="month"
-        // need to format day to be a layout of 'year/month.day'
+        // need to format day to be a layout of 'year/month/day'
         onClickDay={onChange}
+        onClickMonth={onChangeMonth}
       />
       {showForm && (
         <div className="form">
