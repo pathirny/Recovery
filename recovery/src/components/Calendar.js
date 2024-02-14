@@ -147,6 +147,7 @@ export default function CalendarView() {
         .eq("created_at", "2024-02-12");
         // check different supabase queries
         // can use equal to, greater than, less than
+        // or attempt to use another table which stores the months, if the month in year/month/day is equal month then get that data
       console.log(data);
     }
     getMonth();
