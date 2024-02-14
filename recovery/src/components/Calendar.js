@@ -145,6 +145,7 @@ export default function CalendarView() {
         .select("total")
         // this format works but only gets data from 1 day - need to get total across all days in set month
         .eq("created_at", "2024-02-12");
+        // check different supabase queries
       console.log(data);
     }
     getMonth();
