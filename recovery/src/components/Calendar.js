@@ -149,14 +149,15 @@ export default function CalendarView() {
   useEffect(() => {
     async function getMonth() {
       let { data, error } = await supabase
-        .from("test")
-        .select("total")
+        .from("Calendar")
+        .select("*")
         // this format works but only gets data from 1 day - need to get total across all days in set month
-        .contains("created_at", ["2024-02-15", "02"]);
+        .like("created_at", "%2024-02%");
       // check different supabase queries
       // can use equal to, greater than, less than
       // or attempt to use another table which stores the months, if the month in year/month/day is equal month then get that data
-      console.log(data);
+      let res = data;
+      console.log(res);
     }
     getMonth();
   }, [selectedMonth, supabase]);
