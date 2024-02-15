@@ -135,19 +135,27 @@ export default function CalendarView() {
     setShowForm(true);
   };
 
-  console.log(selectedMonth);
+  function splitMonth() {
+    try {
+      let month = selectedMonth.split("/");
 
+      console.log(month);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  splitMonth();
   // this will be used to get a whole months totals added together when month is clicked on
   useEffect(() => {
     async function getMonth() {
       let { data, error } = await supabase
-        .from("Calendar")
+        .from("test")
         .select("total")
         // this format works but only gets data from 1 day - need to get total across all days in set month
-        .eq("created_at", "2024-02-12");
-        // check different supabase queries
-        // can use equal to, greater than, less than
-        // or attempt to use another table which stores the months, if the month in year/month/day is equal month then get that data
+        .contains("created_at", ["2024-02-15", "02"]);
+      // check different supabase queries
+      // can use equal to, greater than, less than
+      // or attempt to use another table which stores the months, if the month in year/month/day is equal month then get that data
       console.log(data);
     }
     getMonth();
