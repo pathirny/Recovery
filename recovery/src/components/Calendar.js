@@ -26,6 +26,7 @@ export default function CalendarView() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState();
   const [monthNumber, setMonthNumber] = useState(0);
+  const [monthlyTotal, setMonthlyTotal] = useState(0);
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -223,13 +224,16 @@ export default function CalendarView() {
         let pattern = "2024-02-12";
         const { data, error } = await supabase
           .from("Calendar")
-          .select("*")
+          .select("total")
           .gt("created_at", firstDay) // Start of month
           .lte("created_at", lastDay);
         // check different supabase queries
         // can use equal to, greater than, less than
         // or attempt to use another table which stores the months, if the month in year/month/day is equal month then get that data
         let res = data;
+        for (let i = 0; i < res.length; i++) {
+          console.log(res[i] + res[i]);
+        }
         console.log(res);
         if (error) {
           console.log(error);
