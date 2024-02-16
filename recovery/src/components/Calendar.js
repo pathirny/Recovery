@@ -26,7 +26,7 @@ export default function CalendarView() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState();
   const [monthNumber, setMonthNumber] = useState(0);
-  const [monthlyTotal, setMonthlyTotal] = useState(0);
+  const [monthlyTotal, setMonthlyTotal] = useState();
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -221,7 +221,6 @@ export default function CalendarView() {
   useEffect(() => {
     async function getMonth(month) {
       try {
-        let pattern = "2024-02-12";
         const { data, error } = await supabase
           .from("Calendar")
           .select("total")
@@ -231,9 +230,14 @@ export default function CalendarView() {
         // can use equal to, greater than, less than
         // or attempt to use another table which stores the months, if the month in year/month/day is equal month then get that data
         let res = data;
-        for (let i = 0; i < res.length; i++) {
-          console.log(res[i] + res[i]);
+        let sumTotal = 0;
+        for (const key in res) {
+          let elementTotal = res[key].total;
+
+          sumTotal += elementTotal;
+          setMonthlyTotal(sumTotal);
         }
+        console.log(monthlyTotal);
         console.log(res);
         if (error) {
           console.log(error);
@@ -320,6 +324,7 @@ export default function CalendarView() {
             </button>
           </form>
           <h2>Todays total is: £{total}</h2>
+          {monthlyTotal && <h2>Your Monthly total is : £{monthlyTotal}</h2>}
         </div>
       )}
       {submitted && (
