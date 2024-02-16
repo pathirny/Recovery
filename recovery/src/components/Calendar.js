@@ -25,6 +25,7 @@ export default function CalendarView() {
   const [total, setTotal] = useState();
   const [submitted, setSubmitted] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState();
+  const [monthNumber, setMonthNumber] = useState(0);
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -134,18 +135,88 @@ export default function CalendarView() {
     setSelectedMonth(formattedMonth);
     setShowForm(true);
   };
+  useEffect(() => {
+    function splitMonth() {
+      try {
+        setMonthNumber(parseInt(selectedMonth.split("/")[1]) - 1);
 
-  function splitMonth() {
-    try {
-      let month = selectedMonth.split("/");
-
-      console.log(month);
-    } catch (error) {
-      console.log(error);
+        console.log(monthNumber);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
-  splitMonth();
+    splitMonth();
+  }, [selectedMonth, supabase]);
+
   // this will be used to get a whole months totals added together when month is clicked on
+  let firstDay;
+  let lastDay;
+
+  switch (monthNumber) {
+    case 0: // January
+      firstDay = "2024/01/01";
+      lastDay = "2024/01/31";
+      break;
+    case 1: // February
+      // Check for leap year
+      if (isLeapYear(2024)) {
+        firstDay = "2024/02/01";
+        lastDay = "2024/02/29";
+      } else {
+        firstDay = "2024/02/01";
+        lastDay = "2024/02/28";
+      }
+      break;
+    case 2: // March
+      firstDay = "2024/03/01";
+      lastDay = "2024/03/31";
+      break;
+    case 3: // April
+      firstDay = "2024/04/01";
+      lastDay = "2024/04/30";
+      break;
+    case 4: // May
+      firstDay = "2024/05/01";
+      lastDay = "2024/05/31";
+      break;
+    case 5: // June
+      firstDay = "2024/06/01";
+      lastDay = "2024/06/30";
+      break;
+    case 6: // July
+      firstDay = "2024/07/01";
+      lastDay = "2024/07/31";
+      break;
+    case 7: // August
+      firstDay = "2024/08/01";
+      lastDay = "2024/08/31";
+      break;
+    case 8: // September
+      firstDay = "2024/09/01";
+      lastDay = "2024/09/30";
+      break;
+    case 9: // October
+      firstDay = "2024/10/01";
+      lastDay = "2024/10/31";
+      break;
+    case 10: // November
+      firstDay = "2024/11/01";
+      lastDay = "2024/11/30";
+      break;
+    case 11: // December
+      firstDay = "2024/12/01";
+      lastDay = "2024/12/31";
+      break;
+    default:
+      console.error("Invalid month selected:", selectedMonth);
+  }
+
+  console.log(firstDay);
+  console.log(lastDay);
+  function isLeapYear(year) {
+    // Check for leap year conditions
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  }
   useEffect(() => {
     async function getMonth(month) {
       try {
@@ -153,8 +224,8 @@ export default function CalendarView() {
         const { data, error } = await supabase
           .from("Calendar")
           .select("*")
-          .gt("created_at", selectedMonth) // Start of month
-          .lte("created_at", selectedMonth);
+          .gt("created_at", firstDay) // Start of month
+          .lte("created_at", lastDay);
         // check different supabase queries
         // can use equal to, greater than, less than
         // or attempt to use another table which stores the months, if the month in year/month/day is equal month then get that data
