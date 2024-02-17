@@ -27,6 +27,8 @@ export default function CalendarView() {
   const [selectedMonth, setSelectedMonth] = useState();
   const [monthNumber, setMonthNumber] = useState(0);
   const [monthlyTotal, setMonthlyTotal] = useState();
+  const [firstDay, setFirstDay] = useState("");
+  const [lastDay, setLastDay] = useState("");
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -149,77 +151,43 @@ export default function CalendarView() {
     splitMonth();
   }, [selectedMonth, supabase]);
 
-  // this will be used to get a whole months totals added together when month is clicked on
-  let firstDay;
-  let lastDay;
+  useEffect(() => {
+    // this will be used to get a whole months totals added together when month is clicked on
+    // Calculate first day of the selected month
+    const firstDayOfMonth = new Date(
+      new Date(selectedMonth).getFullYear(),
+      new Date(selectedMonth).getMonth(),
+      1
+    );
 
-  switch (monthNumber) {
-    case 0: // January
-      firstDay = "2024/01/01";
-      lastDay = "2024/01/31";
-      break;
-    case 1: // February
-      // Check for leap year
-      if (isLeapYear(2024)) {
-        firstDay = "2024/02/01";
-        lastDay = "2024/02/29";
-      } else {
-        firstDay = "2024/02/01";
-        lastDay = "2024/02/28";
-      }
-      break;
-    case 2: // March
-      firstDay = "2024/03/01";
-      lastDay = "2024/03/31";
-      break;
-    case 3: // April
-      firstDay = "2024/04/01";
-      lastDay = "2024/04/30";
-      break;
-    case 4: // May
-      firstDay = "2024/05/01";
-      lastDay = "2024/05/31";
-      break;
-    case 5: // June
-      firstDay = "2024/06/01";
-      lastDay = "2024/06/30";
-      break;
-    case 6: // July
-      firstDay = "2024/07/01";
-      lastDay = "2024/07/31";
-      break;
-    case 7: // August
-      firstDay = "2024/08/01";
-      lastDay = "2024/08/31";
-      break;
-    case 8: // September
-      firstDay = "2024/09/01";
-      lastDay = "2024/09/30";
-      break;
-    case 9: // October
-      firstDay = "2024/10/01";
-      lastDay = "2024/10/31";
-      break;
-    case 10: // November
-      firstDay = "2024/11/01";
-      lastDay = "2024/11/30";
-      break;
-    case 11: // December
-      firstDay = "2024/12/01";
-      lastDay = "2024/12/31";
-      break;
-    default:
-      console.error("Invalid month selected:", selectedMonth);
-  }
+    // Calculate last day of the selected month
+    const lastDayOfMonth = new Date(
+      new Date(selectedMonth).getFullYear(),
+      new Date(selectedMonth).getMonth() + 1,
+      0
+    );
 
-  console.log(firstDay);
-  console.log(lastDay);
+    // Format firstDay and lastDay as strings
+    const firstDayFormatted = `${firstDayOfMonth.getFullYear()}/${
+      firstDayOfMonth.getMonth() + 1
+    }/${firstDayOfMonth.getDate()}`;
+    const lastDayFormatted = `${lastDayOfMonth.getFullYear()}/${
+      lastDayOfMonth.getMonth() + 1
+    }/${lastDayOfMonth.getDate()}`;
+
+    // Update firstDay and lastDay state variables
+    setFirstDay(firstDayFormatted);
+    setLastDay(lastDayFormatted);
+  }, [selectedMonth]);
+
+  // console.log(firstDay);
+  // console.log(lastDay);
   function isLeapYear(year) {
     // Check for leap year conditions
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
   useEffect(() => {
-    async function getMonth(month) {
+    async function getMonth() {
       try {
         const { data, error } = await supabase
           .from("Calendar")
@@ -237,8 +205,6 @@ export default function CalendarView() {
           sumTotal += elementTotal;
           setMonthlyTotal(sumTotal);
         }
-        console.log(monthlyTotal);
-        console.log(res);
         if (error) {
           console.log(error);
         }
@@ -247,8 +213,9 @@ export default function CalendarView() {
       }
     }
     getMonth();
-  }, [selectedMonth, supabase]);
-
+  }, [selectedMonth, supabase, firstDay, lastDay]);
+  console.log(selectedMonth);
+  console.log(monthlyTotal);
   return (
     <div>
       <Calendar
