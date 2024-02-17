@@ -9,6 +9,7 @@ import {
   faReceipt,
   faMoneyBillWave,
 } from "@fortawesome/free-solid-svg-icons";
+import useMonthlyTotal from "../hooks/getMonthlyTotal";
 
 export default function CalendarView() {
   // need to set date to new Date();
@@ -186,35 +187,12 @@ export default function CalendarView() {
     // Check for leap year conditions
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
-  useEffect(() => {
-    async function getMonth() {
-      try {
-        const { data, error } = await supabase
-          .from("Calendar")
-          .select("total")
-          .gt("created_at", firstDay) // Start of month
-          .lte("created_at", lastDay);
-        // check different supabase queries
-        // can use equal to, greater than, less than
-        // or attempt to use another table which stores the months, if the month in year/month/day is equal month then get that data
-        let res = data;
-        let sumTotal = 0;
-        for (const key in res) {
-          let elementTotal = res[key].total;
-          sumTotal += elementTotal;
-        }
-        setMonthlyTotal("");
-        setMonthlyTotal(sumTotal);
 
-        if (error) {
-          console.log(error);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getMonth();
-  }, [selectedMonth, supabase, firstDay, lastDay]);
+  const monthlyTotalFromHook = useMonthlyTotal(firstDay, lastDay);
+
+  useEffect(() => {
+    setMonthlyTotal(monthlyTotalFromHook);
+  }, [monthlyTotalFromHook]);
   console.log(selectedMonth);
   console.log(monthlyTotal);
   return (
