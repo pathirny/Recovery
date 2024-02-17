@@ -29,7 +29,6 @@ export default function CalendarView() {
   const [monthlyTotal, setMonthlyTotal] = useState();
   const [firstDay, setFirstDay] = useState("");
   const [lastDay, setLastDay] = useState("");
-  const [elementTotal, setElementTotal] = useState();
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -201,7 +200,7 @@ export default function CalendarView() {
         let res = data;
         let sumTotal = 0;
         for (const key in res) {
-          setElementTotal(res[key].total);
+          let elementTotal = res[key].total;
           sumTotal += elementTotal;
         }
         setMonthlyTotal("");
