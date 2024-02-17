@@ -39,4 +39,5 @@ const useMonthlyTotal = (firstDay, lastDay) => {
   return monthlyTotal;
 };
 
+
 export default useMonthlyTotal;
