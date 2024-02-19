@@ -181,20 +181,17 @@ export default function CalendarView() {
     setLastDay(lastDayFormatted);
   }, [selectedMonth]);
 
-  // console.log(firstDay);
-  // console.log(lastDay);
-  function isLeapYear(year) {
-    // Check for leap year conditions
-    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-  }
-
   const monthlyTotalFromHook = useMonthlyTotal(firstDay, lastDay);
 
   useEffect(() => {
     setMonthlyTotal(monthlyTotalFromHook);
   }, [monthlyTotalFromHook]);
-  console.log(selectedMonth);
-  console.log(monthlyTotal);
+
+  const onChangeYear = (year) => {
+    console.log(year);
+    setShowForm(true);
+  };
+
   return (
     <div>
       <Calendar
@@ -204,6 +201,7 @@ export default function CalendarView() {
         // need to format day to be a layout of 'year/month/day'
         onClickDay={onChange}
         onClickMonth={onChangeMonth}
+        onClickYear={onChangeYear}
       />
       {showForm && (
         <div className="form">
