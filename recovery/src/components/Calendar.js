@@ -33,6 +33,7 @@ export default function CalendarView() {
   const [lastDay, setLastDay] = useState("");
   const [yearDate, setYearDate] = useState();
   const [yearlyTotal, setYearlyTotal] = useState();
+
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -214,7 +215,6 @@ export default function CalendarView() {
       {showForm && (
         <div className="form">
           {/* <p>The selected date is - {date}</p> */}
-
           <form>
             <div className="formInputs">
               <label>Income</label>
@@ -277,6 +277,7 @@ export default function CalendarView() {
           </form>
           <h2>Todays total is: £{total}</h2>
           {monthlyTotal > 0 && <h2>Your Monthly total is : £{monthlyTotal}</h2>}
+          {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
         </div>
       )}
       {submitted && (

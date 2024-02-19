@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const useYearlyTotal = (yearDate) => {
+  const [yearlyTotal, setYearlyTotal] = useState();
+
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
     supabaseUrl,
@@ -18,6 +20,12 @@ const useYearlyTotal = (yearDate) => {
           .lte("created_at", `${yearDate}-12-31`);
 
         let response = data;
+        let sumTotal = 0;
+        for (const key in response) {
+          let elementTotal = response[key].total;
+          sumTotal += elementTotal;
+        }
+        setYearlyTotal(sumTotal);
         console.log(response);
 
         if (error) {
@@ -29,6 +37,7 @@ const useYearlyTotal = (yearDate) => {
     }
     getYear();
   }, [supabase, yearDate]);
+  return yearlyTotal;
 };
 
 export default useYearlyTotal;
