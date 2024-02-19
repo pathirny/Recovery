@@ -10,6 +10,7 @@ import {
   faMoneyBillWave,
 } from "@fortawesome/free-solid-svg-icons";
 import useMonthlyTotal from "../hooks/getMonthlyTotal";
+import useYearlyTotal from "../hooks/getYearlyTotal";
 
 export default function CalendarView() {
   // need to set date to new Date();
@@ -30,6 +31,8 @@ export default function CalendarView() {
   const [monthlyTotal, setMonthlyTotal] = useState();
   const [firstDay, setFirstDay] = useState("");
   const [lastDay, setLastDay] = useState("");
+  const [yearDate, setYearDate] = useState();
+  const [yearlyTotal, setYearlyTotal] = useState();
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
@@ -143,8 +146,6 @@ export default function CalendarView() {
     function splitMonth() {
       try {
         setMonthNumber(parseInt(selectedMonth.split("/")[1]) - 1);
-
-        console.log(monthNumber);
       } catch (error) {
         console.log(error);
       }
@@ -188,10 +189,17 @@ export default function CalendarView() {
   }, [monthlyTotalFromHook]);
 
   const onChangeYear = (year) => {
-    console.log(year);
+    const formattedYear = year.getFullYear();
+    setYearDate(formattedYear);
+    console.log(yearDate);
     setShowForm(true);
   };
 
+  const yearlyTotalFromHook = useYearlyTotal(yearDate);
+
+  useEffect(() => {
+    setYearlyTotal(yearlyTotalFromHook);
+  }, [yearlyTotalFromHook]);
   return (
     <div>
       <Calendar
