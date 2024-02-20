@@ -204,39 +204,39 @@ export default function CalendarView() {
 
 
   // get weekly data
-   useEffect(()=>{
-     async function getWeekly(){
-       try{
-        let splitDate = selectedDate.split("/")
-        console.log(splitDate)
-        let daily = parseInt(splitDate[2])
-         for(let i = 0; i < 7; i++){
+  //  useEffect(()=>{
+  //    async function getWeekly(){
+  //      try{
+  //       let splitDate = selectedDate.split("/")
+  //       console.log(splitDate)
+  //       let daily = parseInt(splitDate[2])
+  //        for(let i = 0; i < 7; i++){
           
-          console.log(daily)
-          daily++;
+  //         console.log(daily)
+  //         daily++;
               
-          let {data, error} = await supabase
-          .from("Calendar")
-          .select("total")
-          .eq("created_at", `2024-02-${daily}`)
+  //         let {data, error} = await supabase
+  //         .from("Calendar")
+  //         .select("total")
+  //         .eq("created_at", `2024-02-${daily}`)
           
-          if(data){
-          let response = data;
-          console.log(response)
-          }
-          if(error){
-            console.log(error)
-          }
-        }
+  //         if(data){
+  //         let response = data;
+  //         console.log(response)
+  //         }
+  //         if(error){
+  //           console.log(error)
+  //         }
+  //       }
 
           
 
-       } catch (error){
-         console.log(error)
-       }
-     }
-     getWeekly()
-   },[selectedDate, supabase])
+  //      } catch (error){
+  //        console.log(error)
+  //      }
+  //    }
+  //    getWeekly()
+  //  },[selectedDate, supabase])
 
   return (
     <div>
