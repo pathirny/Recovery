@@ -201,6 +201,22 @@ export default function CalendarView() {
   useEffect(() => {
     setYearlyTotal(yearlyTotalFromHook);
   }, [yearlyTotalFromHook]);
+
+
+  // get weekly data
+  useEffect(()=>{
+    async function getWeekly(){
+      console.log("HELLO")
+      let {data, error} = await supabase
+      .from("Calendar")
+      .select("total")
+      .eq("created_at", "2024-02-12")
+
+      let response = data;
+      console.log(response)
+    }
+    getWeekly()
+  },[selectedDate, supabase])
   return (
     <div>
       <Calendar
