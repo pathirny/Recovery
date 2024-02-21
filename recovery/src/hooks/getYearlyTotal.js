@@ -27,13 +27,7 @@ const useYearlyTotal = (yearDate) => {
         }
         setYearlyTotal(sumTotal);
         console.log(response);
-
-        if (error) {
-          console.log(error);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
     getYear();
   }, [supabase, yearDate]);

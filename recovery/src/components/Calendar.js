@@ -68,7 +68,6 @@ export default function CalendarView() {
         setPetrol(response[0].petrol || 0);
         setIncome(response[0].income || 0);
       } catch (error) {
-        console.log(error);
         // setOtherCosts(null);
         // setRepairs(0);
         // setTyres(0);
@@ -114,9 +113,6 @@ export default function CalendarView() {
         },
       ])
       .select();
-    if (error) {
-      console.log(error);
-    }
   }
 
   function closeFormInsertData() {
