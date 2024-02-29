@@ -59,7 +59,7 @@ const useMonthlyTotal = (firstDay, lastDay) => {
     getMonth();
   }, [supabase, firstDay, lastDay]);
 
-  return monthlyTotal, monthlyPetrolTotal, monthlyIncomeTotal, monthlyOtherCostsTotal, monthlyRepairsTotal, monthlyTyresTotal;
+  return {monthlyTotal, monthlyIncomeTotal, monthlyOtherCostsTotal, monthlyPetrolTotal, monthlyRepairsTotal, monthlyTyresTotal};
 };
 
 export default useMonthlyTotal;

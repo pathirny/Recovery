@@ -28,16 +28,16 @@ export default function CalendarView() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState();
   const [monthNumber, setMonthNumber] = useState(0);
-  const [monthlyTotal, setMonthlyTotal] = useState();
+  // const [monthlyTotal, setMonthlyTotal] = useState();
   const [firstDay, setFirstDay] = useState("");
   const [lastDay, setLastDay] = useState("");
   const [yearDate, setYearDate] = useState();
   const [yearlyTotal, setYearlyTotal] = useState();
-  const [monthlyPetrolTotal, setMonthlyPetrolTotal] = useState(0);
-  const [monthlyTyresTotal, setMonthlyTyresTotal] = useState(0);
-  const [monthlyRepairsTotal, setMonthlyRepairsTotal] = useState(0);
-  const [monthlyOtherCostsTotal, setMonthlyOtherCostsTotal] = useState(0);
-  const [monthlyIncomeTotal, setMonthlyIncomeTotal] = useState(0);
+  // const [monthlyPetrolTotal, setMonthlyPetrolTotal] = useState(0);
+  // const [monthlyTyresTotal, setMonthlyTyresTotal] = useState(0);
+  // const [monthlyRepairsTotal, setMonthlyRepairsTotal] = useState(0);
+  // const [monthlyOtherCostsTotal, setMonthlyOtherCostsTotal] = useState(0);
+  // const [monthlyIncomeTotal, setMonthlyIncomeTotal] = useState(0);
 
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
@@ -182,13 +182,20 @@ export default function CalendarView() {
     setLastDay(lastDayFormatted);
   }, [selectedMonth]);
 
-  const monthlyTotalFromHook = useMonthlyTotal(firstDay, lastDay);
+  const {monthlyTotal, monthlyIncomeTotal, monthlyPetrolTotal, monthlyRepairsTotal, monthlyTyresTotal, monthlyOtherCostsTotal} = useMonthlyTotal(firstDay, lastDay);
+  console.log(monthlyTotal)
+  console.log(monthlyPetrolTotal)
+  console.log(monthlyIncomeTotal)
+  // useEffect(() => {
+  //   // setMonthlyTotal(monthlyTotalFromHook);
+  //   // setMonthlyPetrolTotal(monthlyTotalFromHook);
+  //   // setMonthlyIncomeTotal(monthlyTotalFromHook);
+  //   // setMonthlyTyresTotal(monthlyTotalFromHook);
+  //   // setMonthlyOtherCostsTotal(monthlyTotalFromHook);
+  //   // setMonthlyRepairsTotal(monthlyTotalFromHook);
 
-  useEffect(() => {
-    setMonthlyTotal(monthlyTotalFromHook);
-    setMonthlyPetrolTotal(monthlyTotalFromHook);
-  }, [monthlyTotalFromHook]);
-  
+  // }, [monthlyTotalFromHook]);
+
   const onChangeYear = (year) => {
     const formattedYear = year.getFullYear();
     setYearDate(formattedYear);
@@ -310,9 +317,13 @@ export default function CalendarView() {
             </button>
           </form>
           <h2>Todays total is: £{total}</h2>
-          {monthlyTotal > 0 && <h2>Your Monthly total is : £{monthlyTotal}</h2>}
+          {monthlyIncomeTotal > 0 && <h2>Your Monthly Income total is : £{monthlyIncomeTotal}</h2>}
           {monthlyPetrolTotal > 0 && <h2>Your Monthly Petrol total is : £{monthlyPetrolTotal}</h2>}
-
+          {monthlyRepairsTotal > 0 && <h2>Your Monthly Repairs total is : £{monthlyRepairsTotal}</h2>}
+          {monthlyTyresTotal > 0 && <h2>Your Monthly Tyres total is : £{monthlyTyresTotal}</h2>}
+          {monthlyOtherCostsTotal > 0 && <h2>Your Monthly Other Costs total is : £{monthlyOtherCostsTotal}</h2>} 
+          {monthlyTotal > 0 && <h2>Your Monthly total is : £{monthlyTotal}</h2>}
+          
           {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
         </div>
       )}
