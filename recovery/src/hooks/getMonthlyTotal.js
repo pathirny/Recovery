@@ -14,7 +14,7 @@ const useMonthlyTotal = (firstDay, lastDay) => {
       try {
         const { data, error } = await supabase
           .from("Calendar")
-          .select("total")
+          .select("*")
           .gt("created_at", firstDay) // Start of month
           .lte("created_at", lastDay);
 
@@ -25,7 +25,7 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           sumTotal += elementTotal;
         }
         setMonthlyTotal(sumTotal);
-
+        console.log(res)
         if (error) {
           console.log(error);
         }
