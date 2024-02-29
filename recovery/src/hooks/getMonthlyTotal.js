@@ -55,12 +55,11 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           console.log(error);
         }
       }  catch (error) {}
-      console.log(monthlyPetrolTotal)
     }
     getMonth();
   }, [supabase, firstDay, lastDay]);
 
-  return monthlyTotal;
+  return monthlyTotal, monthlyPetrolTotal, monthlyIncomeTotal, monthlyOtherCostsTotal, monthlyRepairsTotal, monthlyTyresTotal;
 };
 
 export default useMonthlyTotal;
