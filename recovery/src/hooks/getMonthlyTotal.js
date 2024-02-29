@@ -29,9 +29,7 @@ const useMonthlyTotal = (firstDay, lastDay) => {
         if (error) {
           console.log(error);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      }  catch (error) {}
     }
     getMonth();
   }, [supabase, firstDay, lastDay]);

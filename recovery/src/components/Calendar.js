@@ -68,7 +68,6 @@ export default function CalendarView() {
         setPetrol(response[0].petrol || 0);
         setIncome(response[0].income || 0);
       } catch (error) {
-        console.log(error);
         // setOtherCosts(null);
         // setRepairs(0);
         // setTyres(0);
@@ -114,9 +113,6 @@ export default function CalendarView() {
         },
       ])
       .select();
-    if (error) {
-      console.log(error);
-    }
   }
 
   function closeFormInsertData() {
@@ -147,9 +143,7 @@ export default function CalendarView() {
     function splitMonth() {
       try {
         setMonthNumber(parseInt(selectedMonth.split("/")[1]) - 1);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
     splitMonth();
   }, [selectedMonth, supabase]);
@@ -202,7 +196,6 @@ export default function CalendarView() {
     setYearlyTotal(yearlyTotalFromHook);
   }, [yearlyTotalFromHook]);
 
-
   // get weekly data
   //  useEffect(()=>{
   //    async function getWeekly(){
@@ -211,15 +204,15 @@ export default function CalendarView() {
   //       console.log(splitDate)
   //       let daily = parseInt(splitDate[2])
   //        for(let i = 0; i < 7; i++){
-          
+
   //         console.log(daily)
   //         daily++;
-              
+
   //         let {data, error} = await supabase
   //         .from("Calendar")
   //         .select("total")
   //         .eq("created_at", `2024-02-${daily}`)
-          
+
   //         if(data){
   //         let response = data;
   //         console.log(response)
@@ -228,8 +221,6 @@ export default function CalendarView() {
   //           console.log(error)
   //         }
   //       }
-
-          
 
   //      } catch (error){
   //        console.log(error)
