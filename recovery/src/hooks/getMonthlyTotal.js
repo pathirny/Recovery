@@ -3,6 +3,11 @@ import { createClient } from "@supabase/supabase-js";
 
 const useMonthlyTotal = (firstDay, lastDay) => {
   const [monthlyTotal, setMonthlyTotal] = useState(0);
+  const [monthlyPetrolTotal, setMonthlyPetrolTotal] = useState(0);
+  const [monthlyTyresTotal, setMonthlyTyresTotal] = useState(0);
+  const [monthlyRepairsTotal, setMonthlyRepairsTotal] = useState(0);
+  const [monthlyOtherCostsTotal, setMonthlyOtherCostsTotal] = useState(0);
+  const [monthlyIncomeTotal, setMonthlyIncomeTotal] = useState(0);
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
     supabaseUrl,
@@ -34,17 +39,23 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           let elementTyres = res[key].tyres;
           sumTotal += elementTotal;
           sumPetrol += elementPetrol;
-          sumTyres += sumTyres;
+          sumTyres += elementTyres;
           sumRepairs += elementRepairs;
           sumIncome += elementIncome;
           sumOtherCosts += elementOtherCosts;
         }
         setMonthlyTotal(sumTotal);
+        setMonthlyPetrolTotal(sumPetrol);
+        setMonthlyIncomeTotal(sumIncome);
+        setMonthlyTyresTotal(sumTyres);
+        setMonthlyOtherCostsTotal(sumOtherCosts);
+        setMonthlyRepairsTotal(sumRepairs);
         console.log(res)
         if (error) {
           console.log(error);
         }
       }  catch (error) {}
+      console.log(monthlyPetrolTotal)
     }
     getMonth();
   }, [supabase, firstDay, lastDay]);
