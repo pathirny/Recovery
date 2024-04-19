@@ -23,48 +23,48 @@ const useMonthlyTotal = (firstDay, lastDay) => {
         const { data, error } = await supabase
           .from("Calendar")
           .select("*")
-          .gt("created_at", firstDay) // Start of month
+          .gte("created_at", firstDay) // Start of month
           .lte("created_at", lastDay);
 
         let res = data;
         let sumTotal = 0;
-        let sumPetrol = 0;
-        let sumTyres = 0;
-        let sumRepairs = 0;
-        let sumIncome = 0;
-        let sumOtherCosts = 0;
-        let sumInsurance = 0;
-        let sumUlez = 0;
-        let sumRoadTax = 0;
+        // let sumPetrol = 0;
+        // let sumTyres = 0;
+        // let sumRepairs = 0;
+        // let sumIncome = 0;
+        // let sumOtherCosts = 0;
+        // let sumInsurance = 0;
+        // let sumUlez = 0;
+        // let sumRoadTax = 0;
         for (const key in res) {
           let elementTotal = res[key].total;
-          let elementPetrol = res[key].petrol;
-          let elementRepairs = res[key].repairs;
-          let elementIncome = res[key].income;
-          let elementOtherCosts = res[key].other_costs;
-          let elementTyres = res[key].tyres;
-          let elementInsurance = res[key].insurance;
-          let elementRoadTax = res[key].road_tax;
-          let elementUlez = res[key].ulez;
+          // let elementPetrol = res[key].petrol;
+          // let elementRepairs = res[key].repairs;
+          // let elementIncome = res[key].income;
+          // let elementOtherCosts = res[key].other_costs;
+          // let elementTyres = res[key].tyres;
+          // let elementInsurance = res[key].insurance;
+          // let elementRoadTax = res[key].road_tax;
+          // let elementUlez = res[key].ulez;
           sumTotal += elementTotal;
-          sumPetrol += elementPetrol;
-          sumTyres += elementTyres;
-          sumRepairs += elementRepairs;
-          sumIncome += elementIncome;
-          sumOtherCosts += elementOtherCosts;
-          sumInsurance += elementInsurance;
-          sumUlez += elementUlez;
-          sumRoadTax += elementRoadTax;
+          // sumPetrol += elementPetrol;
+          // sumTyres += elementTyres;
+          // sumRepairs += elementRepairs;
+          // sumIncome += elementIncome;
+          // sumOtherCosts += elementOtherCosts;
+          // sumInsurance += elementInsurance;
+          // sumUlez += elementUlez;
+          // sumRoadTax += elementRoadTax;
         }
         setMonthlyTotal(sumTotal);
-        setMonthlyPetrolTotal(sumPetrol);
-        setMonthlyIncomeTotal(sumIncome);
-        setMonthlyTyresTotal(sumTyres);
-        setMonthlyOtherCostsTotal(sumOtherCosts);
-        setMonthlyRepairsTotal(sumRepairs);
-        setMonthlyInsurance(sumInsurance);
-        setMonthlyUlez(sumUlez);
-        setMonthlyRoadTax(sumRoadTax);
+        // setMonthlyPetrolTotal(sumPetrol);
+        // setMonthlyIncomeTotal(sumIncome);
+        // setMonthlyTyresTotal(sumTyres);
+        // setMonthlyOtherCostsTotal(sumOtherCosts);
+        // setMonthlyRepairsTotal(sumRepairs);
+        // setMonthlyInsurance(sumInsurance);
+        // setMonthlyUlez(sumUlez);
+        // setMonthlyRoadTax(sumRoadTax);
 
         console.log(res);
         if (error) {
@@ -75,7 +75,7 @@ const useMonthlyTotal = (firstDay, lastDay) => {
     getMonth();
   }, [supabase, firstDay, lastDay]);
 
-  return monthlyTotal, monthlyPetrolTotal, monthlyIncomeTotal, monthlyOtherCostsTotal, monthlyRepairsTotal, monthlyTyresTotal;
+  return monthlyTotal;
 };
 
 export default useMonthlyTotal;
