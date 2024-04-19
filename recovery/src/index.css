@@ -61,7 +61,9 @@ code {
   justify-content: space-evenly;
   align-items: center;
 }
-
+.totals {
+  margin-top: 6rem;
+}
 .submitForm {
   width: 50vw;
   align-self: center;
