@@ -68,14 +68,14 @@ export default function CalendarView() {
           .select("*")
           .eq("created_at", selectedDate);
         let response = data;
-
+        console.log(response);
         setOtherCosts(response[0].other_costs || 0);
         setRepairs(response[0].repairs || 0);
         setTyres(response[0].tyres || 0);
         setPetrol(response[0].petrol || 0);
         setIncome(response[0].income || 0);
         setInsurance(response[0].insurance || 0);
-        setRoadTax(response[0].roadTax || 0);
+        setRoadTax(response[0].road_tax || 0);
         setUlez(response[0].ulez || 0);
       } catch (error) {
         // setOtherCosts(null);
@@ -202,8 +202,26 @@ export default function CalendarView() {
   const monthlyTotalFromHook = useMonthlyTotal(firstDay, lastDay);
 
   useEffect(() => {
+    const {
+      monthlyTotal,
+      monthlyPetrolTotal,
+      monthlyIncomeTotal,
+      monthlyOtherCostsTotal,
+      monthlyRepairsTotal,
+      monthlyTyresTotal,
+      // monthlyInsurance,
+      // monthlyUlez,
+      // monthlyRoadTax
+    } = useMonthlyTotal;
+
     setMonthlyTotal(monthlyTotalFromHook);
     setMonthlyPetrolTotal(monthlyTotalFromHook);
+    setMonthlyIncomeTotal(monthlyTotalFromHook);
+    setMonthlyTyresTotal(monthlyTotalFromHook);
+    // setInsurance(monthlyTotalFromHook);
+    // setRoadTax(monthlyTotalFromHook);
+    // setUlez(monthlyTotalFromHook);
+    console.log("monthlyTotal", monthlyTotal);
   }, [monthlyTotalFromHook]);
 
   const onChangeYear = (year) => {
@@ -355,13 +373,17 @@ export default function CalendarView() {
               Submit
             </button>
           </form>
-          <h2>Todays total is: £{total}</h2>
-          {monthlyTotal > 0 && <h2>Your Monthly total is : £{monthlyTotal}</h2>}
-          {monthlyPetrolTotal > 0 && (
-            <h2>Your Monthly Petrol total is : £{monthlyPetrolTotal}</h2>
-          )}
+          <div className="totals">
+            <h2>Todays total is: £{total}</h2>
+            {monthlyTotal > 0 && (
+              <h2>Your Monthly total is : £{monthlyTotal}</h2>
+            )}
+            {/* {monthlyPetrolTotal > 0 && (
+              <h2>Your Monthly Petrol total is : £{monthlyPetrolTotal}</h2>
+            )} */}
 
-          {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
+            {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
+          </div>
         </div>
       )}
       {submitted && (
