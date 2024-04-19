@@ -8,6 +8,9 @@ const useMonthlyTotal = (firstDay, lastDay) => {
   const [monthlyRepairsTotal, setMonthlyRepairsTotal] = useState(0);
   const [monthlyOtherCostsTotal, setMonthlyOtherCostsTotal] = useState(0);
   const [monthlyIncomeTotal, setMonthlyIncomeTotal] = useState(0);
+  const [monthlyUlez, setMonthlyUlez] = useState(0);
+  const [monthlyRoadTax, setMonthlyRoadTax] = useState(0);
+  const [monthlyInsurance, setMonthlyInsurance] = useState(0);
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
   const supabase = createClient(
     supabaseUrl,
@@ -30,6 +33,9 @@ const useMonthlyTotal = (firstDay, lastDay) => {
         let sumRepairs = 0;
         let sumIncome = 0;
         let sumOtherCosts = 0;
+        let sumInsurance = 0;
+        let sumUlez = 0;
+        let sumRoadTax = 0;
         for (const key in res) {
           let elementTotal = res[key].total;
           let elementPetrol = res[key].petrol;
@@ -37,12 +43,18 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           let elementIncome = res[key].income;
           let elementOtherCosts = res[key].other_costs;
           let elementTyres = res[key].tyres;
+          let elementInsurance = res[key].insurance;
+          let elementRoadTax = res[key].road_tax;
+          let elementUlez = res[key].ulez;
           sumTotal += elementTotal;
           sumPetrol += elementPetrol;
           sumTyres += elementTyres;
           sumRepairs += elementRepairs;
           sumIncome += elementIncome;
           sumOtherCosts += elementOtherCosts;
+          sumInsurance += elementInsurance;
+          sumUlez += elementUlez;
+          sumRoadTax += elementRoadTax;
         }
         setMonthlyTotal(sumTotal);
         setMonthlyPetrolTotal(sumPetrol);
@@ -50,16 +62,30 @@ const useMonthlyTotal = (firstDay, lastDay) => {
         setMonthlyTyresTotal(sumTyres);
         setMonthlyOtherCostsTotal(sumOtherCosts);
         setMonthlyRepairsTotal(sumRepairs);
-        console.log(res)
+        setMonthlyInsurance(sumInsurance);
+        setMonthlyUlez(sumUlez);
+        setMonthlyRoadTax(sumRoadTax);
+
+        console.log(res);
         if (error) {
           console.log(error);
         }
-      }  catch (error) {}
+      } catch (error) {}
     }
     getMonth();
   }, [supabase, firstDay, lastDay]);
 
-  return {monthlyTotal, monthlyIncomeTotal, monthlyOtherCostsTotal, monthlyPetrolTotal, monthlyRepairsTotal, monthlyTyresTotal};
+  return {
+    monthlyTotal,
+    monthlyIncomeTotal,
+    monthlyOtherCostsTotal,
+    monthlyPetrolTotal,
+    monthlyRepairsTotal,
+    monthlyTyresTotal,
+    monthlyInsurance,
+    monthlyRoadTax,
+    monthlyUlez,
+  };
 };
 
 export default useMonthlyTotal;
