@@ -25,6 +25,9 @@ export default function CalendarView() {
   const [otherCosts, setOtherCosts] = useState();
   const [income, setIncome] = useState();
   const [total, setTotal] = useState();
+  const [insurance, setInsurance] = useState();
+  const [roadTax, setRoadTax] = useState();
+  const [ulez, setUlez] = useState();
   const [submitted, setSubmitted] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState();
   const [monthNumber, setMonthNumber] = useState(0);
@@ -59,7 +62,6 @@ export default function CalendarView() {
           .from("Calendar")
           .select("*")
           .eq("created_at", selectedDate);
-
         let response = data;
 
         setOtherCosts(response[0].other_costs || 0);
@@ -67,6 +69,9 @@ export default function CalendarView() {
         setTyres(response[0].tyres || 0);
         setPetrol(response[0].petrol || 0);
         setIncome(response[0].income || 0);
+        setInsurance(response[0].insurance || 0);
+        setRoadTax(response[0].roadTax || 0);
+        setUlez(response[0].ulez || 0);
       } catch (error) {
         // setOtherCosts(null);
         // setRepairs(0);
@@ -92,10 +97,13 @@ export default function CalendarView() {
         parseInt(otherCosts) -
         parseInt(repairs) -
         parseInt(tyres) -
+        parseInt(insurance) -
+        parseInt(ulez) -
+        parseInt(roadTax) -
         parseInt(petrol);
       setTotal(amount);
     }
-  }, [income, otherCosts, repairs, tyres, petrol]);
+  }, [income, otherCosts, repairs, tyres, insurance, ulez, roadTax, petrol]);
 
   // inserting new data
   async function insertData() {
@@ -110,6 +118,9 @@ export default function CalendarView() {
           repairs: repairs,
           tyres: tyres,
           total: total,
+          insurance: insurance,
+          ulez: ulez,
+          road_tax: roadTax,
         },
       ])
       .select();
@@ -294,7 +305,36 @@ export default function CalendarView() {
                 onChange={(event) => setOtherCosts(event.target.value)}
               />
             </div>
-
+            <div className="formInputs">
+              <label>Insurance</label>
+              <FontAwesomeIcon icon={faReceipt} />
+              <input
+                type="number"
+                name="Insurance"
+                value={insurance}
+                onChange={(event) => setInsurance(event.target.value)}
+              />
+            </div>
+            <div className="formInputs">
+              <label>Road Tax</label>
+              <FontAwesomeIcon icon={faReceipt} />
+              <input
+                type="number"
+                name="Road Tax"
+                value={roadTax}
+                onChange={(event) => setRoadTax(event.target.value)}
+              />
+            </div>
+            <div className="formInputs">
+              <label>ULEZ</label>
+              <FontAwesomeIcon icon={faReceipt} />
+              <input
+                type="number"
+                name="ulez"
+                value={ulez}
+                onChange={(event) => setUlez(event.target.value)}
+              />
+            </div>
             <button
               type="button"
               className="submitForm"
