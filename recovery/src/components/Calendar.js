@@ -36,6 +36,11 @@ export default function CalendarView() {
   const [lastDay, setLastDay] = useState("");
   const [yearDate, setYearDate] = useState();
   const [yearlyTotal, setYearlyTotal] = useState();
+  const [monthlyPetrolTotal, setMonthlyPetrolTotal] = useState(0);
+  const [monthlyTyresTotal, setMonthlyTyresTotal] = useState(0);
+  const [monthlyRepairsTotal, setMonthlyRepairsTotal] = useState(0);
+  const [monthlyOtherCostsTotal, setMonthlyOtherCostsTotal] = useState(0);
+  const [monthlyIncomeTotal, setMonthlyIncomeTotal] = useState(0);
 
   // get supabase client
   const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
@@ -90,7 +95,10 @@ export default function CalendarView() {
       otherCosts !== undefined &&
       petrol !== undefined &&
       repairs !== undefined &&
-      tyres !== undefined
+      tyres !== undefined &&
+      ulez !== undefined &&
+      roadTax !== undefined &&
+      insurance !== undefined
     ) {
       let amount =
         parseInt(income) -
@@ -195,6 +203,7 @@ export default function CalendarView() {
 
   useEffect(() => {
     setMonthlyTotal(monthlyTotalFromHook);
+    setMonthlyPetrolTotal(monthlyTotalFromHook);
   }, [monthlyTotalFromHook]);
 
   const onChangeYear = (year) => {
@@ -346,13 +355,13 @@ export default function CalendarView() {
               Submit
             </button>
           </form>
-          <div className="totals">
-            <h2>Todays total is: £{total}</h2>
-            {monthlyTotal > 0 && (
-              <h2>Your Monthly total is : £{monthlyTotal}</h2>
-            )}
-            {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
-          </div>
+          <h2>Todays total is: £{total}</h2>
+          {monthlyTotal > 0 && <h2>Your Monthly total is : £{monthlyTotal}</h2>}
+          {monthlyPetrolTotal > 0 && (
+            <h2>Your Monthly Petrol total is : £{monthlyPetrolTotal}</h2>
+          )}
+
+          {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
         </div>
       )}
       {submitted && (
