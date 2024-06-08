@@ -237,39 +237,6 @@ export default function CalendarView() {
     setYearlyTotal(yearlyTotalFromHook);
   }, [yearlyTotalFromHook]);
 
-  // get weekly data
-  //  useEffect(()=>{
-  //    async function getWeekly(){
-  //      try{
-  //       let splitDate = selectedDate.split("/")
-  //       console.log(splitDate)
-  //       let daily = parseInt(splitDate[2])
-  //        for(let i = 0; i < 7; i++){
-
-  //         console.log(daily)
-  //         daily++;
-
-  //         let {data, error} = await supabase
-  //         .from("Calendar")
-  //         .select("total")
-  //         .eq("created_at", `2024-02-${daily}`)
-
-  //         if(data){
-  //         let response = data;
-  //         console.log(response)
-  //         }
-  //         if(error){
-  //           console.log(error)
-  //         }
-  //       }
-
-  //      } catch (error){
-  //        console.log(error)
-  //      }
-  //    }
-  //    getWeekly()
-  //  },[selectedDate, supabase])
-
   return (
     <div>
       <Calendar
@@ -378,9 +345,9 @@ export default function CalendarView() {
             {monthlyTotal > 0 && (
               <h2>Your Monthly total is : £{monthlyTotal}</h2>
             )}
-            {/* {monthlyPetrolTotal > 0 && (
+            {monthlyPetrolTotal > 0 && (
               <h2>Your Monthly Petrol total is : £{monthlyPetrolTotal}</h2>
-            )} */}
+            )}
 
             {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
           </div>
