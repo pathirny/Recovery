@@ -64,7 +64,6 @@ const useMonthlyTotal = (firstDay, lastDay) => {
         // setMonthlyUlez(sumUlez);
         // setMonthlyRoadTax(sumRoadTax);
 
-        console.log(res);
         if (error) {
           console.log(error);
         }

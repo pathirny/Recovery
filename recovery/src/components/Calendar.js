@@ -63,24 +63,39 @@ export default function CalendarView() {
           .from("Calendar")
           .select("*")
           .eq("created_at", selectedDate);
-        let response = data;
-        console.log(response);
-        setOtherCosts(response[0].other_costs || 0);
-        setRepairs(response[0].repairs || 0);
-        setTyres(response[0].tyres || 0);
-        setPetrol(response[0].petrol || 0);
-        setIncome(response[0].income || 0);
-        setInsurance(response[0].insurance || 0);
-        setRoadTax(response[0].road_tax || 0);
-        setUlez(response[0].ulez || 0);
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          let response = data[0];
+          setOtherCosts(response.other_costs || 0);
+          setRepairs(response.repairs || 0);
+          setTyres(response.tyres || 0);
+          setPetrol(response.petrol || 0);
+          setIncome(response.income || 0);
+          setInsurance(response.insurance || 0);
+          setRoadTax(response.road_tax || 0);
+          setUlez(response.ulez || 0);
+        } else {
+          resetState();
+        }
       } catch (error) {
-        // setOtherCosts(null);
-        // setRepairs(0);
-        // setTyres(0);
-        // setPetrol(0);
-        // setIncome(0);
+        console.error(error);
+        resetState();
       }
     }
+
+    function resetState() {
+      setOtherCosts(null);
+      setRepairs(0);
+      setTyres(0);
+      setPetrol(0);
+      setIncome(0);
+      setInsurance(0);
+      setRoadTax(0);
+      setUlez(0);
+    }
+
     getData();
   }, [selectedDate, supabase]);
 
@@ -106,6 +121,10 @@ export default function CalendarView() {
         parseInt(roadTax) -
         parseInt(petrol);
       setTotal(amount);
+      // if amount is not a number set total to 0
+      if (isNaN(amount)) {
+        setTotal(0);
+      }
     }
   }, [income, otherCosts, repairs, tyres, insurance, ulez, roadTax, petrol]);
 
@@ -217,13 +236,11 @@ export default function CalendarView() {
     // setInsurance(monthlyTotalFromHook);
     // setRoadTax(monthlyTotalFromHook);
     // setUlez(monthlyTotalFromHook);
-    console.log("monthlyTotal", monthlyTotal);
   }, [monthlyTotalFromHook]);
 
   const onChangeYear = (year) => {
     const formattedYear = year.getFullYear();
     setYearDate(formattedYear);
-    console.log(yearDate);
     setShowForm(true);
   };
 
@@ -232,39 +249,6 @@ export default function CalendarView() {
   useEffect(() => {
     setYearlyTotal(yearlyTotalFromHook);
   }, [yearlyTotalFromHook]);
-
-  // get weekly data
-  //  useEffect(()=>{
-  //    async function getWeekly(){
-  //      try{
-  //       let splitDate = selectedDate.split("/")
-  //       console.log(splitDate)
-  //       let daily = parseInt(splitDate[2])
-  //        for(let i = 0; i < 7; i++){
-
-  //         console.log(daily)
-  //         daily++;
-
-  //         let {data, error} = await supabase
-  //         .from("Calendar")
-  //         .select("total")
-  //         .eq("created_at", `2024-02-${daily}`)
-
-  //         if(data){
-  //         let response = data;
-  //         console.log(response)
-  //         }
-  //         if(error){
-  //           console.log(error)
-  //         }
-  //       }
-
-  //      } catch (error){
-  //        console.log(error)
-  //      }
-  //    }
-  //    getWeekly()
-  //  },[selectedDate, supabase])
 
   return (
     <div>

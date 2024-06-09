@@ -22,7 +22,6 @@ const useYearlyTotal = (yearDate) => {
           sumTotal += elementTotal;
         }
         setYearlyTotal(sumTotal);
-        console.log(response);
       } catch (error) {}
     }
     getYear();
