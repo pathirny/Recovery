@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import { createClient } from "@supabase/supabase-js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGasPump,
@@ -11,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import useMonthlyTotal from "../hooks/getMonthlyTotal";
 import useYearlyTotal from "../hooks/getYearlyTotal";
+import useSupabase from "../hooks/supabase";
 
 export default function CalendarView() {
   // need to set date to new Date();
@@ -43,11 +43,7 @@ export default function CalendarView() {
   const [monthlyIncomeTotal, setMonthlyIncomeTotal] = useState(0);
 
   // get supabase client
-  const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
-  const supabase = createClient(
-    supabaseUrl,
-    process.env.REACT_APP_SUPABASE_KEY
-  );
+  const supabase = useSupabase();
 
   // function changeValue(val) {
   //   setDate(date);

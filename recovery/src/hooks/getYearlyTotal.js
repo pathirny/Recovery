@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import useSupabase from "./supabase";
+
 
 const useYearlyTotal = (yearDate) => {
   const [yearlyTotal, setYearlyTotal] = useState();
 
-  const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
-  const supabase = createClient(
-    supabaseUrl,
-    process.env.REACT_APP_SUPABASE_KEY
-  );
+  const supabase = useSupabase();
 
   useEffect(() => {
     async function getYear() {
