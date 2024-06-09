@@ -1,11 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 
-export default function useSupabase() {
-  const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
-  const supabase = createClient(
-    supabaseUrl,
-    process.env.REACT_APP_SUPABASE_KEY
-  );
+const supabaseUrl = "https://rksutahgreosodfhxyro.supabase.co";
+const supabase = createClient(supabaseUrl, process.env.REACT_APP_SUPABASE_KEY);
 
+export default function useSupabase() {
   return supabase;
 }
