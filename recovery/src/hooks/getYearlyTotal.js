@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useSupabase from "./supabase";
 
-
 const useYearlyTotal = (yearDate) => {
   const [yearlyTotal, setYearlyTotal] = useState();
 
@@ -27,7 +26,7 @@ const useYearlyTotal = (yearDate) => {
       } catch (error) {}
     }
     getYear();
-  }, [supabase, yearDate]);
+  }, [yearDate]);
   return yearlyTotal;
 };
 

@@ -164,7 +164,7 @@ export default function CalendarView() {
       } catch (error) {}
     }
     splitMonth();
-  }, [selectedMonth, supabase]);
+  }, [selectedMonth]);
 
   useEffect(() => {
     // this will be used to get a whole months totals added together when month is clicked on
