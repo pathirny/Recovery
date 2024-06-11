@@ -147,17 +147,23 @@ export default function CalendarView() {
         },
       ])
       .select();
-  }
-
-  function closeFormInsertData() {
     setShowForm(false);
-    insertData();
-    setSubmitted(true);
+    setShowForm(false);
 
     setTimeout(() => {
       setSubmitted(false);
     }, 4000);
   }
+
+  // function closeFormInsertData() {
+  //   setShowForm(false);
+  //   insertData();
+  //   setShowForm(false);
+
+  //   setTimeout(() => {
+  //     setSubmitted(false);
+  //   }, 4000);
+  // }
   useEffect(() => {
     setIncome(0);
     setPetrol(0);
@@ -345,11 +351,7 @@ export default function CalendarView() {
                 onChange={(event) => setUlez(event.target.value)}
               />
             </div>
-            <button
-              type="button"
-              className="submitForm"
-              onClick={closeFormInsertData}
-            >
+            <button type="button" className="submitForm" onClick={insertData}>
               Submit
             </button>
           </form>
