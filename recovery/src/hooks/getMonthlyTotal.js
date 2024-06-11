@@ -64,10 +64,12 @@ const useMonthlyTotal = (firstDay, lastDay) => {
         // setMonthlyUlez(sumUlez);
         // setMonthlyRoadTax(sumRoadTax);
 
-        if (error) {
-          console.log(error);
-        }
-      } catch (error) {}
+        // if (error) {
+        //   console.log(error);
+        // }
+      } catch (error) {
+        console.error(error);
+      }
     }
     getMonth();
   }, [supabase, firstDay, lastDay]);
