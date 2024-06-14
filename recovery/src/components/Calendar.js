@@ -381,3 +381,4 @@ export default function CalendarView() {
 }
 // look at splitting the get and post functions
 // need to make hooks for different functionality
+// need to make a hook for monthly totals
