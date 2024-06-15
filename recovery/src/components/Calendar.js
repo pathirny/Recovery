@@ -154,16 +154,6 @@ export default function CalendarView() {
       setSubmitted(false);
     }, 4000);
   }
-
-  // function closeFormInsertData() {
-  //   setShowForm(false);
-  //   insertData();
-  //   setShowForm(false);
-
-  //   setTimeout(() => {
-  //     setSubmitted(false);
-  //   }, 4000);
-  // }
   useEffect(() => {
     setIncome(0);
     setPetrol(0);
@@ -366,18 +356,6 @@ export default function CalendarView() {
           </form>
           <div className="totals">
             <h2>Todays total is: £{total}</h2>
-            {/* {monthlyTotal > 0 && (
-              <h2>Your Monthly total is : £{monthlyTotal}</h2>
-            )}
-            {monthlyPetrolTotal > 0 && (
-              <h2>Your Monthly Petrol total is : £{monthlyPetrolTotal}</h2>
-            )}
-            {monthlyTyresTotal > 0 && (
-              <h2>Your Monthly Petrol total is : £{monthlyTyresTotal}</h2>
-            )}
-            {monthlyPetrolTotal > 0 && (
-              <h2>Your Monthly Petrol total is : £{monthlyPetrolTotal}</h2>
-            )} */}
             {Object.keys(totalsObject).map((key, index) => {
               return (
                 <h2 key={index}>
