@@ -25,7 +25,6 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           .lte("created_at", lastDay);
 
         let res = data;
-        console.log(res);
         let sumTotal = 0;
         let sumPetrol = 0;
         let sumTyres = 0;
@@ -74,7 +73,6 @@ const useMonthlyTotal = (firstDay, lastDay) => {
     getMonth();
   }, [supabase, firstDay, lastDay]);
 
-  console.log(monthlyPetrolTotal);
   arrayOfTotals.push(
     monthlyTotal,
     monthlyPetrolTotal,

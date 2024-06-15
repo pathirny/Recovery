@@ -41,7 +41,7 @@ export default function CalendarView() {
   const [monthlyRepairsTotal, setMonthlyRepairsTotal] = useState(0);
   const [monthlyOtherCostsTotal, setMonthlyOtherCostsTotal] = useState(0);
   const [monthlyIncomeTotal, setMonthlyIncomeTotal] = useState(0);
-
+  const [displayTotals, setDisplayTotals] = useState(false);
   // get supabase client
   const supabase = useSupabase();
 
@@ -208,18 +208,11 @@ export default function CalendarView() {
     // Update firstDay and lastDay state variables
     setFirstDay(firstDayFormatted);
     setLastDay(lastDayFormatted);
+    setDisplayTotals(true);
+    console.log(displayTotals);
   }, [selectedMonth]);
 
   const arrayOfTotals = useMonthlyTotal(firstDay, lastDay);
-
-  useEffect(() => {
-    setMonthlyTotal(arrayOfTotals[0]);
-    setMonthlyPetrolTotal(arrayOfTotals[1]);
-    setMonthlyTyresTotal(arrayOfTotals[2]);
-    setMonthlyRepairsTotal(arrayOfTotals[3]);
-  }, [arrayOfTotals]);
-
-  console.log(arrayOfTotals);
 
   let arrayOfKeys = [
     "Total",
@@ -240,7 +233,6 @@ export default function CalendarView() {
     return obj;
   }
   let totalsObject = convertArrayToObject(arrayOfKeys, arrayOfTotals);
-  console.log(totalsObject);
 
   // manage changing of year
   const onChangeYear = (year) => {
@@ -356,13 +348,13 @@ export default function CalendarView() {
           </form>
           <div className="totals">
             <h2>Todays total is: £{total}</h2>
-            {Object.keys(totalsObject).map((key, index) => {
-              return (
-                <h2 key={index}>
-                  Your {key} total is : £{totalsObject[key]}
-                </h2>
-              );
-            })}
+            {displayTotals
+              ? Object.keys(totalsObject).map((key, index) => (
+                  <h2 key={index}>
+                    Your {key} total is : £{totalsObject[key]}
+                  </h2>
+                ))
+              : null}
 
             {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
           </div>
@@ -379,6 +371,3 @@ export default function CalendarView() {
     </div>
   );
 }
-// look at splitting the get and post functions
-// need to make hooks for different functionality
-// need to make a hook for monthly totals
