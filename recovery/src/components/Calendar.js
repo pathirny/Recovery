@@ -223,9 +223,36 @@ export default function CalendarView() {
   const arrayOfTotals = useMonthlyTotal(firstDay, lastDay);
 
   useEffect(() => {
-    console.log(arrayOfTotals);
-  }, []);
+    setMonthlyTotal(arrayOfTotals[0]);
+    setMonthlyPetrolTotal(arrayOfTotals[1]);
+    setMonthlyTyresTotal(arrayOfTotals[2]);
+    setMonthlyRepairsTotal(arrayOfTotals[3]);
+  }, [arrayOfTotals]);
+
   console.log(arrayOfTotals);
+
+  let arrayOfKeys = [
+    "Total",
+    "Petrol",
+    "Tyres",
+    "Repairs",
+    "Other Costs",
+    "Income",
+    "ULEZ",
+    "Road Tax",
+    "Insurance",
+  ];
+  // convert the array of cost names and values to an object
+  function convertArrayToObject(keys, values) {
+    const obj = Object.fromEntries(
+      keys.map((key, index) => [key, values[index]])
+    );
+    return obj;
+  }
+  let totalsObject = convertArrayToObject(arrayOfKeys, arrayOfTotals);
+  console.log(totalsObject);
+
+  // manage changing of year
   const onChangeYear = (year) => {
     const formattedYear = year.getFullYear();
     setYearDate(formattedYear);
@@ -339,12 +366,25 @@ export default function CalendarView() {
           </form>
           <div className="totals">
             <h2>Todays total is: £{total}</h2>
-            {monthlyTotal > 0 && (
+            {/* {monthlyTotal > 0 && (
               <h2>Your Monthly total is : £{monthlyTotal}</h2>
             )}
-            {/* {monthlyPetrolTotal > 0 && (
+            {monthlyPetrolTotal > 0 && (
+              <h2>Your Monthly Petrol total is : £{monthlyPetrolTotal}</h2>
+            )}
+            {monthlyTyresTotal > 0 && (
+              <h2>Your Monthly Petrol total is : £{monthlyTyresTotal}</h2>
+            )}
+            {monthlyPetrolTotal > 0 && (
               <h2>Your Monthly Petrol total is : £{monthlyPetrolTotal}</h2>
             )} */}
+            {Object.keys(totalsObject).map((key, index) => {
+              return (
+                <h2 key={index}>
+                  Your {key} total is : £{totalsObject[key]}
+                </h2>
+              );
+            })}
 
             {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
           </div>
