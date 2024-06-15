@@ -220,30 +220,12 @@ export default function CalendarView() {
     setLastDay(lastDayFormatted);
   }, [selectedMonth]);
 
-  const monthlyTotalFromHook = useMonthlyTotal(firstDay, lastDay);
+  const arrayOfTotals = useMonthlyTotal(firstDay, lastDay);
 
   useEffect(() => {
-    const {
-      monthlyTotal,
-      monthlyPetrolTotal,
-      monthlyIncomeTotal,
-      monthlyOtherCostsTotal,
-      monthlyRepairsTotal,
-      monthlyTyresTotal,
-      // monthlyInsurance,
-      // monthlyUlez,
-      // monthlyRoadTax
-    } = useMonthlyTotal;
-
-    setMonthlyTotal(monthlyTotalFromHook);
-    setMonthlyPetrolTotal(monthlyTotalFromHook);
-    setMonthlyIncomeTotal(monthlyTotalFromHook);
-    setMonthlyTyresTotal(monthlyTotalFromHook);
-    // setInsurance(monthlyTotalFromHook);
-    // setRoadTax(monthlyTotalFromHook);
-    // setUlez(monthlyTotalFromHook);
-  }, [monthlyTotalFromHook]);
-
+    console.log(arrayOfTotals);
+  }, []);
+  console.log(arrayOfTotals);
   const onChangeYear = (year) => {
     const formattedYear = year.getFullYear();
     setYearDate(formattedYear);

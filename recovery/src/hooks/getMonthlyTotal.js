@@ -75,8 +75,18 @@ const useMonthlyTotal = (firstDay, lastDay) => {
   }, [supabase, firstDay, lastDay]);
 
   console.log(monthlyPetrolTotal);
-
-  return monthlyTotal, monthlyPetrolTotal;
+  arrayOfTotals.push(
+    monthlyTotal,
+    monthlyPetrolTotal,
+    monthlyTyresTotal,
+    monthlyRepairsTotal,
+    monthlyOtherCostsTotal,
+    monthlyIncomeTotal,
+    monthlyUlez,
+    monthlyRoadTax,
+    monthlyInsurance
+  );
+  return arrayOfTotals;
 };
 
 export default useMonthlyTotal;
