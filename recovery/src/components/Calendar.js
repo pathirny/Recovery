@@ -350,13 +350,13 @@ export default function CalendarView() {
             <h2>Todays total is: £{total}</h2>
             {displayTotals
               ? Object.keys(totalsObject).map((key, index) => (
-                  <h2 key={index}>
+                  <h2 key={index} className="totalAmount">
                     Your {key} total is : £{totalsObject[key]}
                   </h2>
                 ))
               : null}
 
-            {yearlyTotal > 0 && <h2>Your Yearly total is : £{yearlyTotal}</h2>}
+            {yearlyTotal > 0 && <h2 className="totalAmount">Your Yearly total is : £{yearlyTotal}</h2>}
           </div>
         </div>
       )}
