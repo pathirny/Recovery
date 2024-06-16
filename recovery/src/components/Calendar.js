@@ -215,15 +215,15 @@ export default function CalendarView() {
   const arrayOfTotals = useMonthlyTotal(firstDay, lastDay);
 
   let arrayOfKeys = [
-    "Total",
+    "Income",
     "Petrol",
     "Tyres",
     "Repairs",
     "Other Costs",
-    "Income",
     "ULEZ",
     "Road Tax",
     "Insurance",
+    "Total"
   ];
   // convert the array of cost names and values to an object
   function convertArrayToObject(keys, values) {
