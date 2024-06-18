@@ -74,15 +74,15 @@ const useMonthlyTotal = (firstDay, lastDay) => {
   }, [supabase, firstDay, lastDay]);
 
   arrayOfTotals.push(
-    monthlyTotal,
+    monthlyIncomeTotal,
     monthlyPetrolTotal,
     monthlyTyresTotal,
     monthlyRepairsTotal,
     monthlyOtherCostsTotal,
-    monthlyIncomeTotal,
     monthlyUlez,
     monthlyRoadTax,
-    monthlyInsurance
+    monthlyInsurance,
+    monthlyTotal,
   );
   return arrayOfTotals;
 };
