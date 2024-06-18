@@ -365,9 +365,11 @@ export default function CalendarView() {
           className="sentConfirm"
           style={{ bottom: submitted ? "5vh" : "-100px" }}
         >
+          
           <h2>Sent!</h2>
         </div>
       )}
     </div>
   );
 }
+// need to sort out the sent confriamtion
