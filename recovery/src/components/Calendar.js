@@ -31,7 +31,7 @@ export default function CalendarView() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState();
   const [monthNumber, setMonthNumber] = useState(0);
-  const [monthlyTotal, setMonthlyTotal] = useState();
+  const [monthlyTotal, setMonthlyTotal] = useState(0);
   const [firstDay, setFirstDay] = useState("");
   const [lastDay, setLastDay] = useState("");
   const [yearDate, setYearDate] = useState();
@@ -86,7 +86,7 @@ export default function CalendarView() {
     }
 
     function resetState() {
-      setOtherCosts(null);
+      setOtherCosts(0);
       setRepairs(0);
       setTyres(0);
       setPetrol(0);
@@ -94,6 +94,8 @@ export default function CalendarView() {
       setInsurance(0);
       setRoadTax(0);
       setUlez(0);
+      //CHANGE MADE HERE
+      setTotal(0);
     }
 
     getData();
@@ -209,7 +211,6 @@ export default function CalendarView() {
     setFirstDay(firstDayFormatted);
     setLastDay(lastDayFormatted);
     setDisplayTotals(true);
-    console.log(displayTotals);
   }, [selectedMonth]);
 
   const arrayOfTotals = useMonthlyTotal(firstDay, lastDay);
@@ -223,8 +224,10 @@ export default function CalendarView() {
     "ULEZ",
     "Road Tax",
     "Insurance",
-    "Total"
+    "Monthly",
   ];
+  // using array to calculate monthly total
+
   // convert the array of cost names and values to an object
   function convertArrayToObject(keys, values) {
     const obj = Object.fromEntries(
@@ -233,7 +236,6 @@ export default function CalendarView() {
     return obj;
   }
   let totalsObject = convertArrayToObject(arrayOfKeys, arrayOfTotals);
-
   // manage changing of year
   const onChangeYear = (year) => {
     const formattedYear = year.getFullYear();
@@ -356,7 +358,11 @@ export default function CalendarView() {
                 ))
               : null}
 
-            {yearlyTotal > 0 && <h2 className="totalAmount">Your Yearly total is : £{yearlyTotal}</h2>}
+            {yearlyTotal > 0 && (
+              <h2 className="totalAmount">
+                Your Yearly total is : £{yearlyTotal}
+              </h2>
+            )}
           </div>
         </div>
       )}
@@ -365,7 +371,6 @@ export default function CalendarView() {
           className="sentConfirm"
           style={{ bottom: submitted ? "5vh" : "-100px" }}
         >
-          
           <h2>Sent!</h2>
         </div>
       )}

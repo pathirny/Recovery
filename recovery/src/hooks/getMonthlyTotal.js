@@ -35,6 +35,8 @@ const useMonthlyTotal = (firstDay, lastDay) => {
         let sumUlez = 0;
         let sumRoadTax = 0;
         for (const key in res) {
+          let expensesArray = [];
+
           let elementTotal = res[key].total;
           let elementPetrol = res[key].petrol;
           let elementRepairs = res[key].repairs;
@@ -44,6 +46,18 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           let elementInsurance = res[key].insurance;
           let elementRoadTax = res[key].road_tax;
           let elementUlez = res[key].ulez;
+          console.log(res);
+          expensesArray.push(
+            res[key].petrol,
+            res[key].repairs,
+            res[key].income,
+            res[key].other_costs,
+            res[key].tyres,
+            res[key].insurance,
+            res[key].road_tax,
+            res[key].ulez
+          );
+          console.log(expensesArray);
           sumTotal += elementTotal;
           sumPetrol += elementPetrol;
           sumTyres += elementTyres;
@@ -54,11 +68,12 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           sumUlez += elementUlez;
           sumRoadTax += elementRoadTax;
         }
+        //appears that monthly total is not being calulated correctly
         setMonthlyTotal(sumTotal);
         setMonthlyPetrolTotal(sumPetrol);
         setMonthlyIncomeTotal(sumIncome);
         setMonthlyTyresTotal(sumTyres);
-        setMonthlyOtherCostsTotal(sumOtherCosts);
+        setMonthlyOtherCostsTotal(parseInt(sumOtherCosts));
         setMonthlyRepairsTotal(sumRepairs);
         setMonthlyInsurance(sumInsurance);
         setMonthlyUlez(sumUlez);
@@ -82,8 +97,9 @@ const useMonthlyTotal = (firstDay, lastDay) => {
     monthlyUlez,
     monthlyRoadTax,
     monthlyInsurance,
-    monthlyTotal,
+    monthlyTotal
   );
+
   return arrayOfTotals;
 };
 
