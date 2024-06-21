@@ -23,8 +23,8 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           .select("*")
           .gte("created_at", firstDay) // Start of month
           .lte("created_at", lastDay);
-
         let res = data;
+
         let sumTotal = 0;
         let sumPetrol = 0;
         let sumTyres = 0;
@@ -36,7 +36,6 @@ const useMonthlyTotal = (firstDay, lastDay) => {
         let sumRoadTax = 0;
         for (const key in res) {
           let expensesArray = [];
-
           let elementTotal = res[key].total;
           let elementPetrol = res[key].petrol;
           let elementRepairs = res[key].repairs;
@@ -46,7 +45,6 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           let elementInsurance = res[key].insurance;
           let elementRoadTax = res[key].road_tax;
           let elementUlez = res[key].ulez;
-          console.log(res);
           expensesArray.push(
             res[key].petrol,
             res[key].repairs,
@@ -57,7 +55,6 @@ const useMonthlyTotal = (firstDay, lastDay) => {
             res[key].road_tax,
             res[key].ulez
           );
-          console.log(expensesArray);
           sumTotal += elementTotal;
           sumPetrol += elementPetrol;
           sumTyres += elementTyres;
@@ -67,9 +64,10 @@ const useMonthlyTotal = (firstDay, lastDay) => {
           sumInsurance += elementInsurance;
           sumUlez += elementUlez;
           sumRoadTax += elementRoadTax;
+          setMonthlyTotal(sumTotal);
+          console.log(sumTotal);
         }
         //appears that monthly total is not being calulated correctly
-        setMonthlyTotal(sumTotal);
         setMonthlyPetrolTotal(sumPetrol);
         setMonthlyIncomeTotal(sumIncome);
         setMonthlyTyresTotal(sumTyres);
